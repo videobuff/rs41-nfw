@@ -7,85 +7,85 @@ TinyGPSPlus gps;
 
 
 //===== Device revision definitions
-#define RSM4x4 //new pcb versions
-//#define RSM4x2 //old pcb versions, also rsm4x1
+//#define RSM4x4 //new pcb versions
+#define RSM4x2  //old pcb versions, also rsm4x1
 
 #ifdef RSM4x4
-  bool rsm4x2 = false;
-  bool rsm4x4 = true;
-  //===== Pin definitions
-  #define RED_LED_PIN PC8    //red led - reversed operation, pin HIGH=led_off, pin LOW=led_on!
-  #define GREEN_LED_PIN PC7  //green led - reversed operation, pin HIGH=led_off, pin LOW=led_on!
+bool rsm4x2 = false;
+bool rsm4x4 = true;
+//===== Pin definitions
+#define RED_LED_PIN PC8    //red led - reversed operation, pin HIGH=led_off, pin LOW=led_on!
+#define GREEN_LED_PIN PC7  //green led - reversed operation, pin HIGH=led_off, pin LOW=led_on!
 
-  #define PSU_SHUTDOWN_PIN PA9  //battery mosfet disable pin
-  #define VBAT_PIN PA5          //battery voltage divider
-  #define VBTN_PIN PA6          //button state voltage divider, CHECK VALUES AT LOWER SUPPLY VOLTAGES
+#define PSU_SHUTDOWN_PIN PA9  //battery mosfet disable pin
+#define VBAT_PIN PA5          //battery voltage divider
+#define VBTN_PIN PA6          //button state voltage divider, CHECK VALUES AT LOWER SUPPLY VOLTAGES
 
-  #define MOSI_RADIO_SPI PB15
-  #define MISO_RADIO_SPI PB14
-  #define SCK_RADIO_SPI PB13
-  #define CS_RADIO_SPI PC13
-  #define HEAT_REF PC6   //reference heating resistors - LOW=disabled, HIGH=enabled - draw about 180mA of current and after a while may burn skin
-  bool heaterPinControlAvail = true;
-  #define REF_THERM PB1  //reference heating thermistor
-  #define PULLUP_TM PB12 //ring oscillator activation mosfet for temperature reading
-  #define PULLUP_HYG PA2 //ring oscillator activation mosfet for humidity reading
-  #define SPST1 PB3 //idk spst1
-  #define SPST2 PA3 //idk spst2
-  #define SPST3 PC14 //boom hygro heater temperature
-  #define SPST4 PC15 //boom main temperature
-  #define MEAS_OUT PA1 //ring oscillator measurement output
-  #define HEAT_HUM1 PA7
-  #define HEAT_HUM2 PB8
+#define MOSI_RADIO_SPI PB15
+#define MISO_RADIO_SPI PB14
+#define SCK_RADIO_SPI PB13
+#define CS_RADIO_SPI PC13
+#define HEAT_REF PC6  //reference heating resistors - LOW=disabled, HIGH=enabled - draw about 180mA of current and after a while may burn skin
+bool heaterPinControlAvail = true;
+#define REF_THERM PB1   //reference heating thermistor
+#define PULLUP_TM PB12  //ring oscillator activation mosfet for temperature reading
+#define PULLUP_HYG PA2  //ring oscillator activation mosfet for humidity reading
+#define SPST1 PB3       //idk spst1
+#define SPST2 PA3       //idk spst2
+#define SPST3 PC14      //boom hygro heater temperature
+#define SPST4 PC15      //boom main temperature
+#define MEAS_OUT PA1    //ring oscillator measurement output
+#define HEAT_HUM1 PA7
+#define HEAT_HUM2 PB8
 
-  #define SI4032_CLOCK 26.0
+#define SI4032_CLOCK 26.0
 
-  //===== Interfaces
-  //SPI_2 interface class (radio communication etc.)
-  SPIClass SPI_2(PB15, PB14, PB13);  // MOSI, MISO, SCK for SPI2
-  // ublox gps              rx    tx
-  HardwareSerial gpsSerial(PB7, PB6);
-  int gpsBaudRate = 38400;
+//===== Interfaces
+//SPI_2 interface class (radio communication etc.)
+SPIClass SPI_2(PB15, PB14, PB13);  // MOSI, MISO, SCK for SPI2
+// ublox gps              rx    tx
+HardwareSerial gpsSerial(PB7, PB6);
+int gpsBaudRate = 38400;
 
 #elif defined(RSM4x2)
-  bool rsm4x2 = true;
-  bool rsm4x4 = false;
-  //===== Pin definitions
-  #define RED_LED_PIN PB8    //red led - reversed operation, pin HIGH=led_off, pin LOW=led_on!
-  #define GREEN_LED_PIN PB7  //green led - reversed operation, pin HIGH=led_off, pin LOW=led_on!
+bool rsm4x2 = true;
+bool rsm4x4 = false;
+//===== Pin definitions
+#define RED_LED_PIN PB8    //red led - reversed operation, pin HIGH=led_off, pin LOW=led_on!
+#define GREEN_LED_PIN PB7  //green led - reversed operation, pin HIGH=led_off, pin LOW=led_on!
 
-  #define PSU_SHUTDOWN_PIN PA12  //battery mosfet disable pin
-  #define VBAT_PIN PA5          //battery voltage 
-  #define VBTN_PIN PA6          //button state voltage divider, CHECK VALUES AT LOWER SUPPLY VOLTAGES
+#define PSU_SHUTDOWN_PIN PA12  //battery mosfet disable pin
+#define VBAT_PIN PA5           //battery voltage
+#define VBTN_PIN PA6           //button state voltage divider, CHECK VALUES AT LOWER SUPPLY VOLTAGES
 
-  #define MOSI_RADIO_SPI PB15
-  #define MISO_RADIO_SPI PB14
-  #define SCK_RADIO_SPI PB13
-  #define CS_RADIO_SPI PC13
-  #define HEAT_REF 0   //not available on older versions, switched only by si4032 gpio
-  bool heaterPinControlAvail = false;
-  #define REF_THERM PB1  //reference heating thermistor
-  #define PULLUP_TM PB12 //ring oscillator activation mosfet for temperature reading
-  #define PULLUP_HYG PA2 //ring oscillator activation mosfet for humidity reading
-  #define SPST1 PB6 //calibration resistors - 90kHz
-  #define SPST2 PA3 //cal. res. - 62kHz
-  #define SPST3 PC14 //boom hygro heater temperature
-  #define SPST4 PC15 //boom main temperature
-  #define MEAS_OUT PA1 //ring oscillator measurement output
-  #define HEAT_HUM1 PA7
-  #define HEAT_HUM2 PB9
+#define MOSI_RADIO_SPI PB15
+#define MISO_RADIO_SPI PB14
+#define SCK_RADIO_SPI PB13
+#define CS_RADIO_SPI PC13
+#define HEAT_REF 0      //not available on older versions, switched only by si4032 gpio
+bool heaterPinControlAvail = false;
+#define REF_THERM PB1   //reference heating thermistor
+#define PULLUP_TM PB12  //ring oscillator activation mosfet for temperature reading
+#define PULLUP_HYG PA2  //ring oscillator activation mosfet for humidity reading
+#define SPST1 PB6       //calibration resistors - 90kHz
+#define SPST2 PA3       //cal. res. - 62kHz
+#define SPST3 PC14      //boom hygro heater temperature
+#define SPST4 PC15      //boom main temperature
+#define MEAS_OUT PA1    //ring oscillator measurement output
+#define HEAT_HUM1 PA7
+#define HEAT_HUM2 PB9
 
-  #define SI4032_CLOCK 26.0
+#define SI4032_CLOCK 26.0
 
-  //===== Interfaces
-  //SPI_2 interface class (radio communication etc.)
-  SPIClass SPI_2(PB15, PB14, PB13);  // MOSI, MISO, SCK for SPI2
-  // ublox gps              rx    tx
-  HardwareSerial gpsSerial(PA10, PA9);
-  int gpsBaudRate = 9600;
+//===== Interfaces
+//SPI_2 interface class (radio communication etc.)
+SPIClass SPI_2(PB15, PB14, PB13);  // MOSI, MISO, SCK for SPI2
+// ublox gps              rx    tx
+HardwareSerial gpsSerial(PA10, PA9);
+int gpsBaudRate = 9600;
 
 #else
-  #error "Please define the pcb model!"
+#error "Please define the pcb model!"
 #endif
 
 // XDATA (2,3)          rx    tx
@@ -95,66 +95,66 @@ HardwareSerial xdataSerial(PB11, PB10);
 unsigned char tx_buf[64] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 };
 
 //===== Radio signals config
-#define CALLSIGN "N0CALLN0CALL"  //max 10 chars long, currently used for rtty
+#define CALLSIGN "PA0ESH-NFW"  //max 10 chars long, currently used for rtty
 //#define CALLSIGN_SHORT "N0CALL1" //max 6 chars long, currently unused
-#define PREAMBLE "AA"            //max 2 long
-int defaultRadioPwrSetting = 7; //default TX power, also see lines down below; 0 = -1dBm (~0.8mW), 1 = 2dBm (~1.6mW), 2 = 5dBm (~3 mW), 3 = 8dBm (~6 mW), 4 = 11dBm (~12 mW), 5 = 14dBm (25 mW), 6 = 17dBm (50 mW), 7 = 20dBm (100 mW)
-int powerSaveRadioPwrSetting = -1; //radio TX power for power save feature - deterimnes the TX power level at which the sonde will be transmitting when certain altitude (powerSaveAltitude), set to -1 to disable the powerSave features applying to the TX power. If this option is activated, the button logic for changing the radio power won't work
+#define PREAMBLE "AA"              //max 2 long
+int defaultRadioPwrSetting = 1;    //default TX power, also see lines down below; 0 = -1dBm (~0.8mW), 1 = 2dBm (~1.6mW), 2 = 5dBm (~3 mW), 3 = 8dBm (~6 mW), 4 = 11dBm (~12 mW), 5 = 14dBm (25 mW), 6 = 17dBm (50 mW), 7 = 20dBm (100 mW)
+int powerSaveRadioPwrSetting = 1;  //radio TX power for power save feature - deterimnes the TX power level at which the sonde will be transmitting when certain altitude (powerSaveAltitude), set to -1 to disable the powerSave features applying to the TX power. If this option is activated, the button logic for changing the radio power won't work
 
-bool enableAddData = false;      //rtty-only mode, when false, the additional-data space is filled with zeros
+bool enableAddData = false;  //rtty-only mode, when false, the additional-data space is filled with zeros
 
-bool pipEnable = false; //pip tx mode
-float pipFrequencyMhz = 434.5; //pip tx frequency
-int pipLengthMs = 1000; //pip signal length in ms
-int pipRepeat = 3; //pip signal repeat count in 1 transmit group
+bool pipEnable = true;             //pip tx mode
+float pipFrequencyMhz = 434.7125;  //pip tx frequency
+int pipLengthMs = 1000;            //pip signal length in ms
+int pipRepeat = 3;                 //pip signal repeat count in 1 transmit group
 
-bool morseEnable = false; //morse tx mode
-float morseFrequencyMhz = 434.65; //morse tx frequency
-int morseUnitTime = 40;  //ms
+bool morseEnable = false;            //morse tx mode
+float morseFrequencyMhz = 434.7125;  //morse tx frequency
+int morseUnitTime = 60;              //ms
 
-bool rttyEnable = false; //rtty tx mode
-bool rttyShortenMsg = false; //false- all data, true - without preamble, time, speed and adddata
-float rttyFrequencyMhz = 434.78; //rtty tx frequency
-int rttyBitDelay = 22000;  //22000 ~= 45bdrate, 13333 ~= 75bdr
-#define RTTY_RADIO_MARK_OFFSET 0x02 //for space offset set to 0x01, the rtty tone spacing will be: 0x02 - 270Hz spacing, 0x03 - 540Hz spacing | SPACING OTHER THAN 270HZ DOES NOT WORK (at lesast on my tests, will check later)
-#define RTTY_RADIO_SPACE_OFFSET 0x01 //usually set to 0x01
+bool rttyEnable = false;              //rtty tx mode
+bool rttyShortenMsg = false;          //false- all data, true - without preamble, time, speed and adddata
+float rttyFrequencyMhz = 434.7125;    //rtty tx frequency
+int rttyBitDelay = 22000;             //22000 ~= 45bdrate, 13333 ~= 75bdr
+#define RTTY_RADIO_MARK_OFFSET 0x02   //for space offset set to 0x01, the rtty tone spacing will be: 0x02 - 270Hz spacing, 0x03 - 540Hz spacing | SPACING OTHER THAN 270HZ DOES NOT WORK (at lesast on my tests, will check later)
+#define RTTY_RADIO_SPACE_OFFSET 0x01  //usually set to 0x01
 
-bool horusEnable = true; //horus v2 tx mode
-float horusFrequencyMhz = 434.74;
-unsigned int horusPayloadId = 256;
+bool horusEnable = true;  //horus v2 tx mode
+float horusFrequencyMhz = 434.7125;
+unsigned int horusPayloadId = 574;
 int horusBdr = 100;
 
-bool bufTxEnable = false; //alpha state! mode
-float fskFrequencyMhz = 436; //txBuf tx frequency
+bool bufTxEnable = false;     //alpha state! mode
+float fskFrequencyMhz = 436;  //txBuf tx frequency
 
-bool radioEnablePA = false;  //default tx state
-bool radioSleep = true; //lowers power consumption and recalibrates oscillator (drift compensation)
-unsigned long defaultModeChangeDelay = 0; //in milliseconds, 0 - disable, 0<delay<2000 - standard delay, 2000<delay - delay + radio sleep mode and recalibration (if radioSleep enabled); default delay between radio transmission modes
-int powerSaveModeChangeDelay = -1; //as above, but activates when the powerSave is ON, set to -1 to disable changing of the transmission delay above powerSaveAltitude
+bool radioEnablePA = true;                     //default tx state
+bool radioSleep = true;                        //lowers power consumption and recalibrates oscillator (drift compensation)
+unsigned long defaultModeChangeDelay = 10000;  //in milliseconds, 0 - disable, 0<delay<2000 - standard delay, 2000<delay - delay + radio sleep mode and recalibration (if radioSleep enabled); default delay between radio transmission modes
+int powerSaveModeChangeDelay = 1500;           //as above, but activates when the powerSave is ON, set to -1 to disable changing of the transmission delay above powerSaveAltitude
 
 
 //===== Other operation config
 bool ledStatusEnable = true;
-int ledAutoDisableHeight = 1000; //height in meters above which the status LEDs get disabled
-const int xdataPortMode = 1; //0 - disabled, 1 - debug uart, 2 - i2c (NO implementation now), 3 - xdata sensors (oif411)
-float vBatWarnValue = 2.5; //battery warning voltage
-float vBatErrValue = 2.3; //error voltage
-float batteryCutOffVoltage = 0; //good for nimh cell life, below 0.8V per AA cell the damage could occur; if you plan on maximising the working time, set to 0V to disable the auto turn OFF
-int ovhtWarnValue = 45; //overheating warning
-int ovhtErrValue = 55; //overheating error
-int gpsSatsWarnValue = 4; 
-bool ubloxGpsAirborneMode = true; //sets the uBlox GPS module to the Airborne 1G Dynamic Model, which should prevent from loosing fix above 18km altitude
-int refHeatingMode = 0; //0 - off, 1 - auto, 2 - always on
-int refHeaterAutoActivationHeight = 0; //set to 0 to disable auto heater enable above set level, if other than 0 then it means height above which the heater gets auto enabled
-unsigned long heaterWorkingTimeSec = 600; //heater heating time
-unsigned long heaterCooldownTimeSec = 3; //heater cooldown time after heating process
-int autoHeaterThreshold = 6; //auto heater temperature threshold, WARNING! If rtty used baud is faster than 45bdr, the threshold should be at 14*C to prevent the radio from loosing PPL-lock, best would be even to set the heating to always on. If only horus mode is used, it is not mandatory, altough for standard flights that dont require more than 12h of operation the 6*C is advised for defrosting and keeping the internals slightly above ice temperature.
-int refHeaterCriticalDisableTemp = 72; //heater critical temp which disables the heating if exceeded
-int refHeaterCriticalReenableTemp = 67; //heater temperature at which heating gets re-enabled after being cut down due to too high temperature
-int gpsNmeaMsgWaitTime = 1200; //waiting time for gps message
-int oif411MsgWaitTime = 1200; //waiting time for oif411 message
-int powerSaveAltitude = 3000; //altitude in meters above which the powerSave features start to occur (currently, TX power is lowered from defaultRadioPwrSetting to powerSaveRadioPwrSetting and the transmision interval is changed from modeChangeDelay to powerSaveModeChangeDelay), set to -1 to completely disable all powerSave features
-bool sensorBoomEnable = true; //enables sensor boom measurement (currently only temperatures, humidity is being engineered) and diagnostics
+int ledAutoDisableHeight = 1000;  //height in meters above which the status LEDs get disabled
+const int xdataPortMode = 1;      //0 - disabled, 1 - debug uart, 2 - i2c (NO implementation now), 3 - xdata sensors (oif411)
+float vBatWarnValue = 2.5;        //battery warning voltage
+float vBatErrValue = 2.3;         //error voltage
+float batteryCutOffVoltage = 0;   //good for nimh cell life, below 0.8V per AA cell the damage could occur; if you plan on maximising the working time, set to 0V to disable the auto turn OFF
+int ovhtWarnValue = 45;           //overheating warning
+int ovhtErrValue = 55;            //overheating error
+int gpsSatsWarnValue = 4;
+bool ubloxGpsAirborneMode = true;          //sets the uBlox GPS module to the Airborne 1G Dynamic Model, which should prevent from loosing fix above 18km altitude
+int refHeatingMode = 0;                    //0 - off, 1 - auto, 2 - always on
+int refHeaterAutoActivationHeight = 0;     //set to 0 to disable auto heater enable above set level, if other than 0 then it means height above which the heater gets auto enabled
+unsigned long heaterWorkingTimeSec = 600;  //heater heating time
+unsigned long heaterCooldownTimeSec = 3;   //heater cooldown time after heating process
+int autoHeaterThreshold = 6;               //auto heater temperature threshold, WARNING! If rtty used baud is faster than 45bdr, the threshold should be at 14*C to prevent the radio from loosing PPL-lock, best would be even to set the heating to always on. If only horus mode is used, it is not mandatory, altough for standard flights that dont require more than 12h of operation the 6*C is advised for defrosting and keeping the internals slightly above ice temperature.
+int refHeaterCriticalDisableTemp = 72;     //heater critical temp which disables the heating if exceeded
+int refHeaterCriticalReenableTemp = 67;    //heater temperature at which heating gets re-enabled after being cut down due to too high temperature
+int gpsNmeaMsgWaitTime = 1200;             //waiting time for gps message
+int oif411MsgWaitTime = 1200;              //waiting time for oif411 message
+int powerSaveAltitude = 3000;              //altitude in meters above which the powerSave features start to occur (currently, TX power is lowered from defaultRadioPwrSetting to powerSaveRadioPwrSetting and the transmision interval is changed from modeChangeDelay to powerSaveModeChangeDelay), set to -1 to completely disable all powerSave features
+bool sensorBoomEnable = false;             //enables sensor boom measurement (currently only temperatures, humidity is being engineered) and diagnostics
 float mainTemperatureCorrectionC = 0;
 float extHeaterTemperatureCorrectionC = 25;
 
@@ -164,9 +164,9 @@ int btnCounter = 0;
 int bufPacketLength = 64;
 int txRepeatCounter = 0;
 float batVFactor = 1.0;
-bool ledsEnable = ledStatusEnable; //internal boolean used for height disable etc.
-#define THERMISTOR_R25 10400  // 10k Ohms at 25°C thermistor 
-#define THERMISTOR_B 4295     // Beta parameter calculated thermistor
+bool ledsEnable = ledStatusEnable;  //internal boolean used for height disable etc.
+#define THERMISTOR_R25 10400        // 10k Ohms at 25°C thermistor
+#define THERMISTOR_B 4295           // Beta parameter calculated thermistor
 String rttyMsg;
 String morseMsg;
 unsigned long gpsTime;
@@ -177,16 +177,17 @@ float gpsLat;
 float gpsLong;
 float gpsAlt;
 float gpsSpeed;
-int gpsSats; //system wide variables, for use in functions that dont read the gps on their own
+int gpsSats;                      //system wide variables, for use in functions that dont read the gps on their own
 unsigned long heaterOnTime = 0;   // Stores the time when heater was turned on
 unsigned long heaterOffTime = 0;  // Stores the time when heater was turned off
 bool isHeaterOn = false;          // Tracks the current state of the heater
 bool isHeaterPausedOvht = false;
-uint8_t heaterDebugState = 0; //5 - off, 11 - ON in auto, 10- auto but OFF, 21 - forced on, 19 - overheated when in auto, 29 - ovht when manual
-int deviceDebugState = 0; //heaterdebugstate + [0 if ok; 100 if warn; 200 if err]
-bool err = false; //const red light, status state
-bool warn = false; //orange light, status state
-bool ok = true;; //green light, status state
+uint8_t heaterDebugState = 0;  //5 - off, 11 - ON in auto, 10- auto but OFF, 21 - forced on, 19 - overheated when in auto, 29 - ovht when manual
+int deviceDebugState = 0;      //heaterdebugstate + [0 if ok; 100 if warn; 200 if err]
+bool err = false;              //const red light, status state
+bool warn = false;             //orange light, status state
+bool ok = true;
+;  //green light, status state
 bool vBatErr = false;
 bool vBatWarn = false;
 bool ovhtErr = false;
@@ -226,24 +227,25 @@ bool sensorBoomGeneralError = false;
 
 
 //Based on https://github.com/cturvey/RandomNinjaChef/blob/main/uBloxHABceiling.c , and  https://github.com/Nevvman18/rs41-nfw/issues/3
-uint8_t ubx_cfg_valset_dyn6[] = { // Series 9 and 10
-  0xB5,0x62,0x06,0x8A,0x09,0x00,  // Header/Command/Size  UBX-CFG-VALSET (RAM)
-  0x00,0x01,0x00,0x00,0x21,0x00,0x11,0x20,0x06, // Payload data (0x20110021 CFG-NAVSPG-DYNMODEL = 6)
-  0xF2,0x4F }; //hardcoded checksum
+uint8_t ubx_cfg_valset_dyn6[] = {                        // Series 9 and 10
+  0xB5, 0x62, 0x06, 0x8A, 0x09, 0x00,                    // Header/Command/Size  UBX-CFG-VALSET (RAM)
+  0x00, 0x01, 0x00, 0x00, 0x21, 0x00, 0x11, 0x20, 0x06,  // Payload data (0x20110021 CFG-NAVSPG-DYNMODEL = 6)
+  0xF2, 0x4F
+};  //hardcoded checksum
 
 uint8_t ubx_cfg_valget_dyn6[] = {
-    0xB5, 0x62, 0x06, 0x8B, 0x08, 0x00,  // Header for UBX-CFG-VALGET
-    0x00, 0x00, 0x00, 0x00,              // Reserved
-    0x21, 0x00, 0x11, 0x20,               // Key for CFG-NAVSPG-DYNMODEL
-    0xEB, 0x57 //hardcoded checksum
-  };
+  0xB5, 0x62, 0x06, 0x8B, 0x08, 0x00,  // Header for UBX-CFG-VALGET
+  0x00, 0x00, 0x00, 0x00,              // Reserved
+  0x21, 0x00, 0x11, 0x20,              // Key for CFG-NAVSPG-DYNMODEL
+  0xEB, 0x57                           //hardcoded checksum
+};
 
 uint8_t ubx_cfg_nav5_dynmodel6[] = {
-  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0xFF, 0xFF, 
-  0x06, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27, 
-  0x00, 0x00, 0x05, 0x00, 0xFA, 0x00, 0xFA, 0x00, 
-  0x64, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00, 0x00, 
-  0x10, 0x27, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+  0xB5, 0x62, 0x06, 0x24, 0x24, 0x00, 0xFF, 0xFF,
+  0x06, 0x03, 0x00, 0x00, 0x00, 0x00, 0x10, 0x27,
+  0x00, 0x00, 0x05, 0x00, 0xFA, 0x00, 0xFA, 0x00,
+  0x64, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00, 0x00,
+  0x10, 0x27, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x4D, 0xDB
 };
 
@@ -294,34 +296,33 @@ struct uBloxPacket {
 //===== Horus mode deifinitions
 // Horus v2 Mode 1 (32-byte) Binary Packet
 //== FOR MORE INFO SEE int build_horus_binary_packet_v2(char *buffer) function around line 600
-struct HorusBinaryPacketV2
-{
-    uint16_t     PayloadID;
-    uint16_t	Counter;
-    uint8_t	Hours;
-    uint8_t	Minutes;
-    uint8_t	Seconds;
-    float	Latitude;
-    float	Longitude;
-    uint16_t  	Altitude;
-    uint8_t     Speed;       // Speed in Knots (1-255 knots)
-    uint8_t     Sats;
-    int8_t      Temp;        // Twos Complement Temp value.
-    uint8_t     BattVoltage; // 0 = 0.5v, 255 = 2.0V, linear steps in-between.
-    // The following 9 bytes (up to the CRC) are user-customizable. The following just
-    // provides an example of how they could be used.
-    int16_t     dummy1;      // unsigned int uint8_t
-    int16_t     dummy2;       // Float float
-    uint8_t     dummy3;     // battery voltage test uint8_t
-    uint16_t     dummy4;     // divide by 10 uint8_t
-    uint16_t     dummy5;    // divide by 100 uint16_t
-    uint16_t    Checksum;    // CRC16-CCITT Checksum.
-}  __attribute__ ((packed));
+struct HorusBinaryPacketV2 {
+  uint16_t PayloadID;
+  uint16_t Counter;
+  uint8_t Hours;
+  uint8_t Minutes;
+  uint8_t Seconds;
+  float Latitude;
+  float Longitude;
+  uint16_t Altitude;
+  uint8_t Speed;  // Speed in Knots (1-255 knots)
+  uint8_t Sats;
+  int8_t Temp;          // Twos Complement Temp value.
+  uint8_t BattVoltage;  // 0 = 0.5v, 255 = 2.0V, linear steps in-between.
+  // The following 9 bytes (up to the CRC) are user-customizable. The following just
+  // provides an example of how they could be used.
+  int16_t dummy1;     // unsigned int uint8_t
+  int16_t dummy2;     // Float float
+  uint8_t dummy3;     // battery voltage test uint8_t
+  uint16_t dummy4;    // divide by 10 uint8_t
+  uint16_t dummy5;    // divide by 100 uint16_t
+  uint16_t Checksum;  // CRC16-CCITT Checksum.
+} __attribute__((packed));
 
 // Buffers and counters.
-char rawbuffer [128];   // Buffer to temporarily store a raw binary packet.
-char codedbuffer [128]; // Buffer to store an encoded binary packet
-char debugbuffer[256]; // Buffer to store debug strings
+char rawbuffer[128];    // Buffer to temporarily store a raw binary packet.
+char codedbuffer[128];  // Buffer to store an encoded binary packet
+char debugbuffer[256];  // Buffer to store debug strings
 
 uint32_t fsk4_base = 0, fsk4_baseHz = 0;
 uint32_t fsk4_shift = 0, fsk4_shiftHz = 0;
@@ -376,9 +377,9 @@ const char* MorseTable[37] = {
 
 
 
-//===== Radio config functions 
+//===== Radio config functions
 
-void init_RFM22(void) { //initial radio config, it is dynamic in code but this is the entry configuration for cw to work
+void init_RFM22(void) {                  //initial radio config, it is dynamic in code but this is the entry configuration for cw to work
   writeRegister(0x06, 0x00);             // Disable all interrupts
   writeRegister(0x07, 0x01);             // Set READY mode
   writeRegister(0x09, 0x7F);             // Cap = 12.5pF
@@ -525,17 +526,13 @@ void setRadioModulation(int modulationNumber) {
 
   if (modulationNumber == 0) {
     writeRegister(0x71, 0x00);  //cw
-  }
-  else if (modulationNumber == 1) {
+  } else if (modulationNumber == 1) {
     writeRegister(0x71, 0b00010001);  //OOK
-  }
-  else if (modulationNumber == 2) {
+  } else if (modulationNumber == 2) {
     writeRegister(0x71, 0b00010010);  //FSK
-  }
-  else if (modulationNumber == 3) {
+  } else if (modulationNumber == 3) {
     writeRegister(0x71, 0x22);  //GFSK
-  }
-  else {
+  } else {
     writeRegister(0x71, 0x00);  //error handling
   }
 }
@@ -577,31 +574,31 @@ void sendBit(bool bitValue) {
   } else {
     setRadioSmallOffset(RTTY_RADIO_SPACE_OFFSET);
   }
-  delayMicroseconds(rttyBitDelay); // Fixed delay according to baud rate
+  delayMicroseconds(rttyBitDelay);  // Fixed delay according to baud rate
   buttonHandler();
 }
 
 void sendStartBits() {
   // Send start bits (usually 1 start bit)
-  sendBit(0); // Start bit (0)
+  sendBit(0);  // Start bit (0)
 }
 
 void sendCharacter(char character) {
   // Encode character to RTTY format (assuming default encoding and no special encoding needed for . and -)
-  
+
   // Send start bits
   sendStartBits();
 
   // Character encoding (use default encoding, 7-bit or 8-bit)
-  uint8_t encoding = (uint8_t)character; // Assuming ASCII encoding for characters
+  uint8_t encoding = (uint8_t)character;  // Assuming ASCII encoding for characters
   for (int i = 0; i < 8; i++) {
     sendBit((encoding >> i) & 0x01);
   }
 
   // Send stop bits (1.5 stop bits)
-  sendBit(1); // First stop bit
-  delayMicroseconds(rttyBitDelay); // Delay between stop bits
-  sendBit(1); // Extra stop bit (part of 1.5 stop bits)
+  sendBit(1);                       // First stop bit
+  delayMicroseconds(rttyBitDelay);  // Delay between stop bits
+  sendBit(1);                       // Extra stop bit (part of 1.5 stop bits)
 }
 
 
@@ -669,39 +666,38 @@ void fsk4_tone(int t) {
   delayMicroseconds(fsk4_bitDuration);
 }
 
-void fsk4_idle(){
-    fsk4_tone(0);
+void fsk4_idle() {
+  fsk4_tone(0);
 }
 
-void fsk4_preamble(uint8_t len){
-    int k;
-    for (k=0; k<len; k++){
-        fsk4_writebyte(0x1B);
-    }
+void fsk4_preamble(uint8_t len) {
+  int k;
+  for (k = 0; k < len; k++) {
+    fsk4_writebyte(0x1B);
+  }
 }
 
-size_t fsk4_writebyte(uint8_t b){
-    int k;
-    // Send symbols MSB first.
-    for (k=0;k<4;k++)
-    {
-        // Extract 4FSK symbol (2 bits)
-        uint8_t symbol = (b & 0xC0) >> 6;
-        // Modulate
-        fsk4_tone(symbol);
-        // Shift to next symbol.
-        b = b << 2;
-    }
+size_t fsk4_writebyte(uint8_t b) {
+  int k;
+  // Send symbols MSB first.
+  for (k = 0; k < 4; k++) {
+    // Extract 4FSK symbol (2 bits)
+    uint8_t symbol = (b & 0xC0) >> 6;
+    // Modulate
+    fsk4_tone(symbol);
+    // Shift to next symbol.
+    b = b << 2;
+  }
 
-  return(1);
+  return (1);
 }
 
-size_t fsk4_write(char* buff, size_t len){
+size_t fsk4_write(char* buff, size_t len) {
   size_t n = 0;
-  for(size_t i = 0; i < len; i++) {
+  for (size_t i = 0; i < len; i++) {
     n += fsk4_writebyte(buff[i]);
   }
-  return(n);
+  return (n);
 }
 
 
@@ -716,15 +712,15 @@ String createRttyPayload() {
   String formattedLong = String(gpsLong, 5);
 
   if (enableAddData) {
-    if(xdataPortMode == 3) {
+    if (xdataPortMode == 3) {
       String ozoneCurrent = String(xdataOzoneCurrent, 2);  // Convert to string with 2 decimal places
       ozoneCurrent = ozoneCurrent.substring(0, 4);         // Ensure max length of 4 characters
 
-      String batteryVoltage = String(xdataOzoneBatteryVoltage); // Convert to string
-      batteryVoltage = batteryVoltage.substring(0, 2);          // Ensure max length of 2 characters
+      String batteryVoltage = String(xdataOzoneBatteryVoltage);  // Convert to string
+      batteryVoltage = batteryVoltage.substring(0, 2);           // Ensure max length of 2 characters
 
-      String pumpTemperature = String(xdataOzonePumpTemperature); // Convert to string
-      pumpTemperature = pumpTemperature.substring(0, 2);     // Ensure max length of 2 characters
+      String pumpTemperature = String(xdataOzonePumpTemperature);  // Convert to string
+      pumpTemperature = pumpTemperature.substring(0, 2);           // Ensure max length of 2 characters
 
       // Combine the formatted strings
       String addData = ozoneCurrent + ";" + batteryVoltage + ";" + pumpTemperature;
@@ -733,7 +729,7 @@ String createRttyPayload() {
     addData = "0000000000";  // Default additional data
   }
 
-  payload = String(PREAMBLE) + ";" + String(CALLSIGN) + ";" + String(gpsTime) + ";" + String(gpsLat, 5) + ";" + String(gpsLong, 5) + ";" + String(gpsAlt, 1) + ";" + String(gpsSpeed) + ";" + String(gpsSats) + ";" + String(readBatteryVoltage()) + ";" + String(mainTemperatureValue, 1) + ";" + addData;  
+  payload = String(PREAMBLE) + ";" + String(CALLSIGN) + ";" + String(gpsTime) + ";" + String(gpsLat, 5) + ";" + String(gpsLong, 5) + ";" + String(gpsAlt, 1) + ";" + String(gpsSpeed) + ";" + String(gpsSats) + ";" + String(readBatteryVoltage()) + ";" + String(mainTemperatureValue, 1) + ";" + addData;
 
   return payload;
 }
@@ -745,19 +741,19 @@ String createRttyShortPayload() {
   String formattedLat = String(gpsLat, 5);
   String formattedLong = String(gpsLong, 5);
 
-  payload = String(CALLSIGN) + ";" + String(gpsLat, 5) + ";" + String(gpsLong, 5) + ";" + String(gpsAlt, 1) + ";" + String(gpsSats) + ";" + String(mainTemperatureValue) + ";" + String(readThermistorTemp(), 1);  
+  payload = String(CALLSIGN) + ";" + String(gpsLat, 5) + ";" + String(gpsLong, 5) + ";" + String(gpsAlt, 1) + ";" + String(gpsSats) + ";" + String(mainTemperatureValue) + ";" + String(readThermistorTemp(), 1);
 
   return payload;
 }
 
-int build_horus_binary_packet_v2(char *buffer){
+int build_horus_binary_packet_v2(char* buffer) {
   // Generate a Horus Binary v2 packet, and populate it with data.
   // The assignments in this function should be replaced with real data
   horusPacketCount++;
-  
+
   struct HorusBinaryPacketV2 BinaryPacketV2;
 
-  BinaryPacketV2.PayloadID = horusPayloadId; // 256 = 4FSKTEST-V2. Refer https://github.com/projecthorus/horusdemodlib/blob/master/payload_id_list.txt | you can attempt to modify this according to your needs
+  BinaryPacketV2.PayloadID = horusPayloadId;  // 256 = 4FSKTEST-V2. Refer https://github.com/projecthorus/horusdemodlib/blob/master/payload_id_list.txt | you can attempt to modify this according to your needs
   BinaryPacketV2.Counter = horusPacketCount;
   BinaryPacketV2.Hours = gpsHours;
   BinaryPacketV2.Minutes = gpsMinutes;
@@ -771,27 +767,26 @@ int build_horus_binary_packet_v2(char *buffer){
   BinaryPacketV2.Temp = readThermistorTemp();
   // Custom section. This is an example only, and the 9 bytes in this section can be used in other
   // ways. Refer here for details: https://github.com/projecthorus/horusdemodlib/wiki/5-Customising-a-Horus-Binary-v2-
-  
-  if(xdataPortMode == 3) { //ozone data tx
-    BinaryPacketV2.dummy1 = xdataOzoneCurrent; //-32768 - 32767 int16_t /100
-    BinaryPacketV2.dummy2 = xdataOzoneBatteryVoltage * 10; //-32768 - 32767 int16_t /10
-    BinaryPacketV2.dummy3 = deviceDebugState; //0 - 255 uint8_t
-    BinaryPacketV2.dummy4 = xdataOzonePumpTemperature * 10; //0 - 65535 uint16_t /10
-    BinaryPacketV2.dummy5 = 0; //unused in this decoding scheme
-  }
-  else { //default, matching rs41ng
-    BinaryPacketV2.dummy1 = vVCalc * 100; //-32768 - 32767 int16_t
-    BinaryPacketV2.dummy2 = mainTemperatureValue * 10; //-32768 - 32767 int16_t
-    BinaryPacketV2.dummy3 = 0; //0 - 255 uint8_t
-    BinaryPacketV2.dummy4 = 0; //0 - 65535 uint16_t
+
+  if (xdataPortMode == 3) {                                  //ozone data tx
+    BinaryPacketV2.dummy1 = xdataOzoneCurrent;               //-32768 - 32767 int16_t /100
+    BinaryPacketV2.dummy2 = xdataOzoneBatteryVoltage * 10;   //-32768 - 32767 int16_t /10
+    BinaryPacketV2.dummy3 = deviceDebugState;                //0 - 255 uint8_t
+    BinaryPacketV2.dummy4 = xdataOzonePumpTemperature * 10;  //0 - 65535 uint16_t /10
+    BinaryPacketV2.dummy5 = 0;                               //unused in this decoding scheme
+  } else {                                                   //default, matching rs41ng
+    BinaryPacketV2.dummy1 = vVCalc * 100;                    //-32768 - 32767 int16_t
+    BinaryPacketV2.dummy2 = mainTemperatureValue * 10;       //-32768 - 32767 int16_t
+    BinaryPacketV2.dummy3 = 0;                               //0 - 255 uint8_t
+    BinaryPacketV2.dummy4 = 0;                               //0 - 65535 uint16_t
     BinaryPacketV2.dummy5 = deviceDebugState;
   }
-  
 
-  BinaryPacketV2.Checksum = (uint16_t)crc16((unsigned char*)&BinaryPacketV2,sizeof(BinaryPacketV2)-2);
+
+  BinaryPacketV2.Checksum = (uint16_t)crc16((unsigned char*)&BinaryPacketV2, sizeof(BinaryPacketV2) - 2);
 
   memcpy(buffer, &BinaryPacketV2, sizeof(BinaryPacketV2));
-	
+
   return sizeof(struct HorusBinaryPacketV2);
 }
 
@@ -800,43 +795,42 @@ int build_horus_binary_packet_v2(char *buffer){
 //===== Function-only algorythms (for horus modem etc.)
 
 unsigned int _crc_xmodem_update(unsigned int crc, uint8_t data) {
-    crc ^= data << 8;
-    for (int i = 0; i < 8; i++) {
-        if (crc & 0x8000) {
-            crc = (crc << 1) ^ 0x1021;
-        } else {
-            crc <<= 1;
-        }
+  crc ^= data << 8;
+  for (int i = 0; i < 8; i++) {
+    if (crc & 0x8000) {
+      crc = (crc << 1) ^ 0x1021;
+    } else {
+      crc <<= 1;
     }
-    return crc;
+  }
+  return crc;
 }
 
 // CRC16 Calculation
-unsigned int crc16(unsigned char *string, unsigned int len) {
-    unsigned int crc = 0xFFFF; // Initial seed
-    for (unsigned int i = 0; i < len; i++) {
-        crc = _crc_xmodem_update(crc, string[i]);
-    }
-    return crc;
+unsigned int crc16(unsigned char* string, unsigned int len) {
+  unsigned int crc = 0xFFFF;  // Initial seed
+  for (unsigned int i = 0; i < len; i++) {
+    crc = _crc_xmodem_update(crc, string[i]);
+  }
+  return crc;
 }
 
-void PrintHex(char *data, uint8_t length, char *tmp){
- // Print char data as hex
- byte first ;
- int j=0;
- for (uint8_t i=0; i<length; i++) 
- {
-   first = ((uint8_t)data[i] >> 4) | 48;
-   if (first > 57) tmp[j] = first + (byte)39;
-   else tmp[j] = first ;
-   j++;
+void PrintHex(char* data, uint8_t length, char* tmp) {
+  // Print char data as hex
+  byte first;
+  int j = 0;
+  for (uint8_t i = 0; i < length; i++) {
+    first = ((uint8_t)data[i] >> 4) | 48;
+    if (first > 57) tmp[j] = first + (byte)39;
+    else tmp[j] = first;
+    j++;
 
-   first = ((uint8_t)data[i] & 0x0F) | 48;
-   if (first > 57) tmp[j] = first + (byte)39; 
-   else tmp[j] = first;
-   j++;
- }
- tmp[length*2] = 0;
+    first = ((uint8_t)data[i] & 0x0F) | 48;
+    if (first > 57) tmp[j] = first + (byte)39;
+    else tmp[j] = first;
+    j++;
+  }
+  tmp[length * 2] = 0;
 }
 
 
@@ -844,7 +838,7 @@ void PrintHex(char *data, uint8_t length, char *tmp){
 
 void buttonHandler() {
   if (analogRead(VBTN_PIN) + 50 > analogRead(VBAT_PIN) && analogRead(VBAT_PIN) > 100) {
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("Button pressed");
     }
     btnCounter = 0;
@@ -857,7 +851,7 @@ void buttonHandler() {
       delay(250);
       digitalWrite(RED_LED_PIN, HIGH);
       digitalWrite(GREEN_LED_PIN, HIGH);
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.print("*");
       }
       btnCounter++;
@@ -865,8 +859,7 @@ void buttonHandler() {
   }
   if (btnCounter == 1) {
 
-  }
-  else if (btnCounter == 2) {
+  } else if (btnCounter == 2) {
     if (radioEnablePA == true) {
       radioEnablePA = false;
       digitalWrite(RED_LED_PIN, LOW);
@@ -876,11 +869,10 @@ void buttonHandler() {
       digitalWrite(RED_LED_PIN, LOW);
       delay(50);
       digitalWrite(RED_LED_PIN, HIGH);
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("Radio PA disabled");
       }
-    }
-    else {
+    } else {
       radioEnablePA = true;
       digitalWrite(GREEN_LED_PIN, LOW);
       delay(50);
@@ -889,13 +881,12 @@ void buttonHandler() {
       digitalWrite(GREEN_LED_PIN, LOW);
       delay(50);
       digitalWrite(GREEN_LED_PIN, HIGH);
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("Radio PA enabled");
       }
     }
-  }
-  else if (btnCounter == 3) {
-    if(powerSaveRadioPwrSetting == -1) {
+  } else if (btnCounter == 3) {
+    if (powerSaveRadioPwrSetting == -1) {
       if (defaultRadioPwrSetting != 7) {
         defaultRadioPwrSetting = 7;
         setRadioPower(7);
@@ -911,11 +902,10 @@ void buttonHandler() {
         digitalWrite(GREEN_LED_PIN, LOW);
         delay(50);
         digitalWrite(GREEN_LED_PIN, HIGH);
-        if(xdataPortMode == 1) {
+        if (xdataPortMode == 1) {
           xdataSerial.println("Radio PA power set to 100mW (+20dBm, MAX!)");
-        }  
-      }
-      else {
+        }
+      } else {
         defaultRadioPwrSetting = 0;
         setRadioPower(0);
 
@@ -930,20 +920,18 @@ void buttonHandler() {
         digitalWrite(RED_LED_PIN, LOW);
         delay(50);
         digitalWrite(RED_LED_PIN, HIGH);
-        if(xdataPortMode == 1) {
+        if (xdataPortMode == 1) {
           xdataSerial.println("Radio PA power set to 2mW (min)");
         }
       }
-    }
-    else {
+    } else {
       digitalWrite(RED_LED_PIN, LOW);
       delay(400);
       digitalWrite(RED_LED_PIN, HIGH);
       delay(100);
-    }    
-  }
-  else if (btnCounter == 4) {
-    if(rttyEnable != true) {
+    }
+  } else if (btnCounter == 4) {
+    if (rttyEnable != true) {
       rttyEnable = true;
 
       digitalWrite(GREEN_LED_PIN, LOW);
@@ -961,12 +949,11 @@ void buttonHandler() {
       digitalWrite(GREEN_LED_PIN, LOW);
       delay(50);
       digitalWrite(GREEN_LED_PIN, HIGH);
-      
-      if(xdataPortMode == 1) {
+
+      if (xdataPortMode == 1) {
         xdataSerial.println("RTTY enabled");
-      } 
-    }
-    else {
+      }
+    } else {
       rttyEnable = false;
 
       digitalWrite(RED_LED_PIN, LOW);
@@ -985,13 +972,12 @@ void buttonHandler() {
       delay(50);
       digitalWrite(RED_LED_PIN, HIGH);
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("RTTY disabled");
       }
     }
-  }
-  else if (btnCounter == 5) {
-    if(rttyShortenMsg != true) {
+  } else if (btnCounter == 5) {
+    if (rttyShortenMsg != true) {
       rttyShortenMsg = true;
 
       digitalWrite(RED_LED_PIN, LOW);
@@ -1014,11 +1000,10 @@ void buttonHandler() {
       delay(50);
       digitalWrite(RED_LED_PIN, HIGH);
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("RTTY short messages format enabled");
       }
-    }
-    else {
+    } else {
       rttyShortenMsg = false;
 
       digitalWrite(GREEN_LED_PIN, LOW);
@@ -1040,14 +1025,13 @@ void buttonHandler() {
       digitalWrite(GREEN_LED_PIN, LOW);
       delay(50);
       digitalWrite(GREEN_LED_PIN, HIGH);
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("RTTY standard messages format enabled");
       }
     }
-  }
-  else if (btnCounter == 6) {
-    if(refHeatingMode == 0) { //if it is disabled
-      refHeatingMode = 1; //set to auto
+  } else if (btnCounter == 6) {
+    if (refHeatingMode == 0) {  //if it is disabled
+      refHeatingMode = 1;       //set to auto
 
       digitalWrite(RED_LED_PIN, LOW);
       digitalWrite(GREEN_LED_PIN, LOW);
@@ -1086,12 +1070,11 @@ void buttonHandler() {
       digitalWrite(GREEN_LED_PIN, HIGH);
       delay(50);
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("Reference heater - AUTO mode!");
       }
-    }
-    else if(refHeatingMode == 1) { //if set to auto
-      refHeatingMode = 2; //set to always on
+    } else if (refHeatingMode == 1) {  //if set to auto
+      refHeatingMode = 2;              //set to always on
 
       digitalWrite(RED_LED_PIN, LOW);
       delay(50);
@@ -1117,13 +1100,12 @@ void buttonHandler() {
       delay(50);
       digitalWrite(RED_LED_PIN, HIGH);
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("Reference heater - ALWAYS ON!");
       }
-    }
-    else {
-      refHeatingMode = 0; //turn heating off
-      
+    } else {
+      refHeatingMode = 0;  //turn heating off
+
       digitalWrite(GREEN_LED_PIN, LOW);
       delay(50);
       digitalWrite(GREEN_LED_PIN, HIGH);
@@ -1148,21 +1130,21 @@ void buttonHandler() {
       delay(50);
       digitalWrite(GREEN_LED_PIN, HIGH);
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("Reference heater - disabled");
       }
     }
 
-  }
-  else if (btnCounter == 7) {
+  } else if (btnCounter == 7) {
     digitalWrite(RED_LED_PIN, LOW);
     radioDisableTx();
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("\n PSU_SHUTDOWN_PIN set HIGH, bye!");
     }
     delay(3000);
     digitalWrite(PSU_SHUTDOWN_PIN, HIGH);
-  } else {}
+  } else {
+  }
 
   btnCounter = 0;
 }
@@ -1177,102 +1159,94 @@ void deviceStatusHandler() {
 
   err = false;
   warn = false;
-  ok = true; // Default to ok until proven otherwise
+  ok = true;  // Default to ok until proven otherwise
 
   // Evaluate battery voltage
   float vBat = readBatteryVoltage();
   if (vBat < vBatErrValue) {
-      vBatErr = true;
+    vBatErr = true;
   } else if (vBat < vBatWarnValue) {
-      vBatWarn = true;
+    vBatWarn = true;
   }
 
   // Evaluate thermistor temperature
   float temp = readThermistorTemp();
   if (temp > ovhtErrValue && refHeatingMode == 0) {
-      ovhtErr = true;
+    ovhtErr = true;
   } else if (temp > ovhtWarnValue && refHeatingMode == 0) {
-      ovhtWarn = true;
+    ovhtWarn = true;
   }
 
   // Evaluate GPS status
   if (gpsSats < gpsSatsWarnValue) {
-      gpsFixWarn = true;
+    gpsFixWarn = true;
   }
 
   // Evaluate sensor boom errors
-  if(sensorBoomMainTempError && sensorBoomHumidityModuleError) {
+  if (sensorBoomMainTempError && sensorBoomHumidityModuleError) {
     sensorBoomErr = true;
     sensorBoomWarn = false;
-  }
-  else if(sensorBoomMainTempError || sensorBoomHumidityModuleError) {
+  } else if (sensorBoomMainTempError || sensorBoomHumidityModuleError) {
     sensorBoomWarn = true;
     sensorBoomErr = false;
-  }
-  else {
+  } else {
     sensorBoomWarn = false;
     sensorBoomErr = false;
   }
 
   // Combine the results to determine the final state
   if (vBatErr || ovhtErr || sensorBoomErr) {
-      err = true;
-      ok = false;
+    err = true;
+    ok = false;
   } else if (vBatWarn || ovhtWarn || gpsFixWarn || sensorBoomWarn) {
-      warn = true;
-      ok = false;
+    warn = true;
+    ok = false;
   } else {
-      // Explicitly clear warning if no errors or warnings are active
-      warn = false;
-      ok = true;
+    // Explicitly clear warning if no errors or warnings are active
+    warn = false;
+    ok = true;
   }
 
   // Set deviceDebugState based on error/warn/ok flags
-  if(ok) {
+  if (ok) {
     deviceDebugState = 0;
     deviceDebugState += heaterDebugState;
-  }
-  else if(warn) {
+  } else if (warn) {
     deviceDebugState = 0;
     deviceDebugState += 100;
     deviceDebugState += heaterDebugState;
-  }
-  else {
+  } else {
     deviceDebugState = 0;
     deviceDebugState += 200;
     deviceDebugState += heaterDebugState;
   }
 
   // Cap the debug state within range
-  if(deviceDebugState < 0 || deviceDebugState > 255) {
+  if (deviceDebugState < 0 || deviceDebugState > 255) {
     deviceDebugState = 249;
   }
 
   // LED Handling
-  if(ledStatusEnable) {
-    if(gpsAlt > ledAutoDisableHeight) { // disable leds after launch
+  if (ledStatusEnable) {
+    if (gpsAlt > ledAutoDisableHeight) {  // disable leds after launch
       ledsEnable = false;
-    }
-    else {
+    } else {
       ledsEnable = true;
     }
 
-    if(ledsEnable) {
-      if(err) {
+    if (ledsEnable) {
+      if (err) {
         digitalWrite(GREEN_LED_PIN, HIGH);  // Green LED on (Error state)
         digitalWrite(RED_LED_PIN, LOW);     // Red LED off
-      }
-      else if(warn) {
-        digitalWrite(GREEN_LED_PIN, LOW);   // Both LEDs off (Warning state)
+      } else if (warn) {
+        digitalWrite(GREEN_LED_PIN, LOW);  // Both LEDs off (Warning state)
         digitalWrite(RED_LED_PIN, LOW);
-      }
-      else if(ok) {
-        digitalWrite(GREEN_LED_PIN, LOW);   // Green LED off
-        digitalWrite(RED_LED_PIN, HIGH);    // Red LED on (OK state)
+      } else if (ok) {
+        digitalWrite(GREEN_LED_PIN, LOW);  // Green LED off
+        digitalWrite(RED_LED_PIN, HIGH);   // Red LED on (OK state)
       }
     }
-  }
-  else {
+  } else {
     digitalWrite(GREEN_LED_PIN, HIGH);  // Both LEDs on when LED status is disabled
     digitalWrite(RED_LED_PIN, HIGH);
   }
@@ -1280,43 +1254,40 @@ void deviceStatusHandler() {
 
 
 void serialStatusHandler() {
-    if(xdataPortMode == 1) {
-      if(vBatErr) {
-        xdataSerial.println("[ERR]: vBatErr - critically low voltage");
-      }
+  if (xdataPortMode == 1) {
+    if (vBatErr) {
+      xdataSerial.println("[ERR]: vBatErr - critically low voltage");
+    }
 
-      if(vBatWarn) {
-        xdataSerial.println("[WARN]: vBatWarn - low voltage");
-      }
+    if (vBatWarn) {
+      xdataSerial.println("[WARN]: vBatWarn - low voltage");
+    }
 
-      if(ovhtErr) {
-        xdataSerial.println("[ERR]: ovhtErr - internal temperature very high");
-      }
+    if (ovhtErr) {
+      xdataSerial.println("[ERR]: ovhtErr - internal temperature very high");
+    }
 
-      if(ovhtWarn) {
-        xdataSerial.println("[WARN]: ovhtWarn - internal temperature high");
-      }
+    if (ovhtWarn) {
+      xdataSerial.println("[WARN]: ovhtWarn - internal temperature high");
+    }
 
-      if(gpsFixWarn) {
-        xdataSerial.println("[WARN]: gpsFix - gps isn't locked on position, give sky clearance, waiting for fix...");
-      }
+    if (gpsFixWarn) {
+      xdataSerial.println("[WARN]: gpsFix - gps isn't locked on position, give sky clearance, waiting for fix...");
+    }
 
-      if(ok) {
-        xdataSerial.println("[ok]: Device working properly");
-      }
-  
+    if (ok) {
+      xdataSerial.println("[ok]: Device working properly");
+    }
   }
-    
 }
 
 
 float readBatteryVoltage() {
   float batV;
 
-  if(rsm4x4) { //12bit adc
+  if (rsm4x4) {  //12bit adc
     batV = ((float)analogRead(VBAT_PIN) / 4095) * 3 * 2 * batVFactor;
-  }
-  else { //10bit adc
+  } else {  //10bit adc
     batV = ((float)analogRead(VBAT_PIN) / 1024) * 3 * 2 * batVFactor;
   }
 
@@ -1329,11 +1300,10 @@ float readThermistorTemp() {
   float voltage;
 
   // Convert ADC value to voltage
-  if(rsm4x4) {
+  if (rsm4x4) {
     voltage = adcValue * (3.0 / 4095);  // 3.0V reference, 12-bit ADC
-  }
-  else {
-    voltage = adcValue * (3.0 / 1023); //10bit adc
+  } else {
+    voltage = adcValue * (3.0 / 1023);  //10bit adc
   }
 
 
@@ -1366,12 +1336,11 @@ uint8_t readRadioTemp() {
 
 void updateGpsData() {
   unsigned long start = millis();
-  do 
-  {
+  do {
     while (gpsSerial.available())
       gps.encode(gpsSerial.read());
   } while (millis() - start < gpsNmeaMsgWaitTime);
-  
+
 
   gpsTime = gps.time.value() / 100;
   gpsHours = gps.time.hour();
@@ -1383,208 +1352,200 @@ void updateGpsData() {
   gpsSpeed = gps.speed.mps();
   gpsSats = gps.satellites.value();
 
-  if(xdataPortMode == 1) {
+  if (xdataPortMode == 1) {
     xdataSerial.println("[info]: GPS data obtained and updated");
   }
 }
 
 
 void disableRefHeaterRing() {
-  digitalWrite(PULLUP_TM, LOW); //disable temperature ring oscillator power
-  digitalWrite(PULLUP_HYG, LOW); //disable humidity ring oscillator power
+  digitalWrite(PULLUP_TM, LOW);   //disable temperature ring oscillator power
+  digitalWrite(PULLUP_HYG, LOW);  //disable humidity ring oscillator power
 
-  if(rsm4x4) {
-    digitalWrite(HEAT_REF, LOW); //disable reference heater
-  }
-  else if(rsm4x2) {
-    writeRegister(0x0C, 0x01); //change state of GPIO_1 pin output of SI4032 chip (it has 3 configurable GPIOs), older PCBs had heating controlled via its GPIOs
+  if (rsm4x4) {
+    digitalWrite(HEAT_REF, LOW);  //disable reference heater
+  } else if (rsm4x2) {
+    writeRegister(0x0C, 0x01);  //change state of GPIO_1 pin output of SI4032 chip (it has 3 configurable GPIOs), older PCBs had heating controlled via its GPIOs
   }
 }
-  
+
 
 void enableRefHeaterRing() {
-  digitalWrite(PULLUP_TM, LOW); //enable temperature ring oscillator power
-  digitalWrite(PULLUP_HYG, LOW); //enable humidity ring oscillator power
+  digitalWrite(PULLUP_TM, LOW);   //enable temperature ring oscillator power
+  digitalWrite(PULLUP_HYG, LOW);  //enable humidity ring oscillator power
 
-  if(rsm4x4) {
-    digitalWrite(HEAT_REF, HIGH); //enable reference heater
-  }
-  else if(rsm4x2) {
-    writeRegister(0x0C, 0x00); //change state of GPIO_1 pin output of SI4032 chip (it has 3 configurable GPIOs), older PCBs had heating controlled via its GPIOs
+  if (rsm4x4) {
+    digitalWrite(HEAT_REF, HIGH);  //enable reference heater
+  } else if (rsm4x2) {
+    writeRegister(0x0C, 0x00);  //change state of GPIO_1 pin output of SI4032 chip (it has 3 configurable GPIOs), older PCBs had heating controlled via its GPIOs
   }
 }
 
 
 void refHeaterHandler() {
-    unsigned long currentMillis = millis();
-    float currentTemp = readThermistorTemp();
+  unsigned long currentMillis = millis();
+  float currentTemp = readThermistorTemp();
 
-    // Mode 0: Heating Off
-    if (refHeatingMode == 0) {
-        disableRefHeaterRing(); // Ensure the heater is off
+  // Mode 0: Heating Off
+  if (refHeatingMode == 0) {
+    disableRefHeaterRing();  // Ensure the heater is off
 
-        isHeaterOn = false;
-        heaterDebugState = 5;
+    isHeaterOn = false;
+    heaterDebugState = 5;
 
-        if(xdataPortMode == 1) {
-          xdataSerial.println("[info]: Heating is completely OFF.");
-        }
-        
-        return; // Exit early
+    if (xdataPortMode == 1) {
+      xdataSerial.println("[info]: Heating is completely OFF.");
     }
 
-    // Mode 1: Auto Mode
-    if (refHeatingMode == 1) {
-        // Disable heater if temperature exceeds the critical disable threshold
-        if (currentTemp > refHeaterCriticalDisableTemp) {
-            disableRefHeaterRing(); // Turn off the heater
+    return;  // Exit early
+  }
 
-            if(xdataPortMode == 1) {
-              xdataSerial.print("[ERR]: Heater has been turned OFF because temp exceeds threshold of (*C): ");
-              xdataSerial.println(refHeaterCriticalDisableTemp);
-            }
-            
-            heaterOffTime = currentMillis; // Record the time the heater was turned off
+  // Mode 1: Auto Mode
+  if (refHeatingMode == 1) {
+    // Disable heater if temperature exceeds the critical disable threshold
+    if (currentTemp > refHeaterCriticalDisableTemp) {
+      disableRefHeaterRing();  // Turn off the heater
 
-            isHeaterOn = false; // Update the heater state
-            isHeaterPausedOvht = true; // Mark that the heater was paused due to overheating
-            heaterDebugState = 19;
+      if (xdataPortMode == 1) {
+        xdataSerial.print("[ERR]: Heater has been turned OFF because temp exceeds threshold of (*C): ");
+        xdataSerial.println(refHeaterCriticalDisableTemp);
+      }
 
-            return; // Exit early
-        }
+      heaterOffTime = currentMillis;  // Record the time the heater was turned off
 
-        // Re-enable the heater if it was paused due to overheating and the temperature drops below the re-enable threshold
-        if (isHeaterPausedOvht && currentTemp <= refHeaterCriticalReenableTemp) {
-          if(xdataPortMode == 1) {
-            xdataSerial.print("[info]: Temperature dropped below re-enable threshold of (*C): ");
-            xdataSerial.println(refHeaterCriticalReenableTemp);
+      isHeaterOn = false;         // Update the heater state
+      isHeaterPausedOvht = true;  // Mark that the heater was paused due to overheating
+      heaterDebugState = 19;
+
+      return;  // Exit early
+    }
+
+    // Re-enable the heater if it was paused due to overheating and the temperature drops below the re-enable threshold
+    if (isHeaterPausedOvht && currentTemp <= refHeaterCriticalReenableTemp) {
+      if (xdataPortMode == 1) {
+        xdataSerial.print("[info]: Temperature dropped below re-enable threshold of (*C): ");
+        xdataSerial.println(refHeaterCriticalReenableTemp);
+      }
+
+      isHeaterPausedOvht = false;  // Clear the overheating flag
+
+      enableRefHeaterRing();  // Turn on the heater
+
+      if (xdataPortMode == 1) {
+        xdataSerial.println("[info]: HEATER RE-ENABLED!");
+      }
+
+      isHeaterOn = true;  // Update the heater state
+      heaterDebugState = 11;
+
+      return;  // Exit early after re-enabling
+    }
+
+    // Disable heater if the timer condition is met
+    if (isHeaterOn && currentMillis - heaterOnTime >= heaterWorkingTimeSec * 1000) {
+      disableRefHeaterRing();  // Turn off the heater
+      if (xdataPortMode == 1) {
+        xdataSerial.print("[info]: Heater OFF due to timer, cooldown for (seconds): ");
+        xdataSerial.println(heaterCooldownTimeSec);
+      }
+
+      heaterOffTime = currentMillis;  // Record the time the heater was turned off
+      isHeaterOn = false;             // Update the heater state
+      heaterDebugState = 10;
+    } else if (isHeaterOn) {
+      if (xdataPortMode == 1) {
+        xdataSerial.print("[info]: Heater is currently ON, at (*C): ");
+        xdataSerial.println(currentTemp);
+      }
+
+      heaterDebugState = 11;
+    } else {
+      // If the heater is off, check if cooldown has passed and if it should be re-enabled
+      if (currentMillis - heaterOffTime >= heaterCooldownTimeSec * 1000) {
+        if (currentTemp < autoHeaterThreshold) {
+          if (xdataPortMode == 1) {
+            xdataSerial.print("[info]: Cooldown time passed, thermistor temp is under threshold of (*C): ");
+            xdataSerial.println(autoHeaterThreshold);
+            xdataSerial.println("[info]: HEATER ON!");
           }
-            
-            isHeaterPausedOvht = false; // Clear the overheating flag
 
-            enableRefHeaterRing(); // Turn on the heater
+          enableRefHeaterRing();  // Turn on the heater
 
-            if(xdataPortMode == 1) {
-              xdataSerial.println("[info]: HEATER RE-ENABLED!");
-            }
-
-            isHeaterOn = true; // Update the heater state
-            heaterDebugState = 11;
-
-            return; // Exit early after re-enabling
-        }
-
-        // Disable heater if the timer condition is met
-        if (isHeaterOn && currentMillis - heaterOnTime >= heaterWorkingTimeSec * 1000) {
-            disableRefHeaterRing(); // Turn off the heater
-            if(xdataPortMode == 1) {
-              xdataSerial.print("[info]: Heater OFF due to timer, cooldown for (seconds): ");
-              xdataSerial.println(heaterCooldownTimeSec);
-            }
-
-            heaterOffTime = currentMillis; // Record the time the heater was turned off
-            isHeaterOn = false; // Update the heater state
-            heaterDebugState = 10;
-        }
-        else if (isHeaterOn) {
-          if(xdataPortMode == 1) {
-            xdataSerial.print("[info]: Heater is currently ON, at (*C): ");
-            xdataSerial.println(currentTemp);
-          }
-
+          heaterOnTime = currentMillis;  // Record the time the heater was turned on
+          isHeaterOn = true;             // Update the heater state
           heaterDebugState = 11;
-        }
-        else {
-            // If the heater is off, check if cooldown has passed and if it should be re-enabled
-            if (currentMillis - heaterOffTime >= heaterCooldownTimeSec * 1000) {
-                if (currentTemp < autoHeaterThreshold) {
-                  if(xdataPortMode == 1) {
-                    xdataSerial.print("[info]: Cooldown time passed, thermistor temp is under threshold of (*C): ");
-                    xdataSerial.println(autoHeaterThreshold);
-                    xdataSerial.println("[info]: HEATER ON!");
-                  }
-
-                    enableRefHeaterRing(); // Turn on the heater
-
-                    heaterOnTime = currentMillis; // Record the time the heater was turned on
-                    isHeaterOn = true; // Update the heater state
-                    heaterDebugState = 11;
-                }
-                else {
-                  if(xdataPortMode == 1) {
-                    xdataSerial.println("[info]: autoRefHeating is enabled, but the temperature is higher than the threshold.");
-                  }
-                    
-                    heaterDebugState = 10;
-                }
-            }
-        }
-        return; // Exit early
-    }
-
-    // Mode 2: Heater Always On with Safety Control
-    if (refHeatingMode == 2) {
-        // Check if the temperature exceeds the critical disable threshold
-        if (currentTemp > refHeaterCriticalDisableTemp) {
-            disableRefHeaterRing(); // Turn off the heater
-
-            if(xdataPortMode == 1) {
-              xdataSerial.print("[ERR]: Heater has been turned OFF because temp exceeds threshold of (*C): ");
-              xdataSerial.println(refHeaterCriticalDisableTemp);
-            }
-            
-            heaterOffTime = currentMillis; // Record the time the heater was turned off
-            isHeaterOn = false; // Update the heater state
-            isHeaterPausedOvht = true; // Mark that the heater was paused due to overheating
-            heaterDebugState = 29;
-
-            return; // Exit early
-        }
-
-        // Re-enable the heater immediately after temperature drops below re-enable threshold
-        if (isHeaterPausedOvht && currentTemp <= refHeaterCriticalReenableTemp) {
-          if(xdataPortMode == 1) {
-            xdataSerial.print("[info]: Temperature dropped below re-enable threshold of (*C): ");
-            xdataSerial.println(refHeaterCriticalReenableTemp);
+        } else {
+          if (xdataPortMode == 1) {
+            xdataSerial.println("[info]: autoRefHeating is enabled, but the temperature is higher than the threshold.");
           }
-            
-            isHeaterPausedOvht = false; // Clear the overheating flag
 
-            enableRefHeaterRing(); // Turn on the heater
-
-            if(xdataPortMode == 1) {
-              xdataSerial.println("[info]: HEATER RE-ENABLED!");
-            }
-
-            isHeaterOn = true; // Update the heater state
-            heaterOnTime = currentMillis; // Reset the heater's working time
-            heaterDebugState = 21;
+          heaterDebugState = 10;
         }
-        else if (!isHeaterOn) {
-            // If the heater is not on, ensure it is turned on
-            enableRefHeaterRing(); // Turn on the heater
-
-            if(xdataPortMode == 1) {
-              xdataSerial.println("[info]: Heating is always ON with safety control.");
-            }
-            
-            isHeaterOn = true; // Update the heater state
-            heaterOnTime = currentMillis; // Reset the heater's working time
-            heaterDebugState = 21;
-        }
-        return; // Exit early
+      }
     }
+    return;  // Exit early
+  }
+
+  // Mode 2: Heater Always On with Safety Control
+  if (refHeatingMode == 2) {
+    // Check if the temperature exceeds the critical disable threshold
+    if (currentTemp > refHeaterCriticalDisableTemp) {
+      disableRefHeaterRing();  // Turn off the heater
+
+      if (xdataPortMode == 1) {
+        xdataSerial.print("[ERR]: Heater has been turned OFF because temp exceeds threshold of (*C): ");
+        xdataSerial.println(refHeaterCriticalDisableTemp);
+      }
+
+      heaterOffTime = currentMillis;  // Record the time the heater was turned off
+      isHeaterOn = false;             // Update the heater state
+      isHeaterPausedOvht = true;      // Mark that the heater was paused due to overheating
+      heaterDebugState = 29;
+
+      return;  // Exit early
+    }
+
+    // Re-enable the heater immediately after temperature drops below re-enable threshold
+    if (isHeaterPausedOvht && currentTemp <= refHeaterCriticalReenableTemp) {
+      if (xdataPortMode == 1) {
+        xdataSerial.print("[info]: Temperature dropped below re-enable threshold of (*C): ");
+        xdataSerial.println(refHeaterCriticalReenableTemp);
+      }
+
+      isHeaterPausedOvht = false;  // Clear the overheating flag
+
+      enableRefHeaterRing();  // Turn on the heater
+
+      if (xdataPortMode == 1) {
+        xdataSerial.println("[info]: HEATER RE-ENABLED!");
+      }
+
+      isHeaterOn = true;             // Update the heater state
+      heaterOnTime = currentMillis;  // Reset the heater's working time
+      heaterDebugState = 21;
+    } else if (!isHeaterOn) {
+      // If the heater is not on, ensure it is turned on
+      enableRefHeaterRing();  // Turn on the heater
+
+      if (xdataPortMode == 1) {
+        xdataSerial.println("[info]: Heating is always ON with safety control.");
+      }
+
+      isHeaterOn = true;             // Update the heater state
+      heaterOnTime = currentMillis;  // Reset the heater's working time
+      heaterDebugState = 21;
+    }
+    return;  // Exit early
+  }
 }
 
 void refHeaterHeightActivator() {
-  if(refHeaterAutoActivationHeight != 0) {
-    if(gpsAlt > refHeaterAutoActivationHeight) {
+  if (refHeaterAutoActivationHeight != 0) {
+    if (gpsAlt > refHeaterAutoActivationHeight) {
       refHeatingMode = 2;
-    }
-    else if(gpsAlt < refHeaterAutoActivationHeight) {
+    } else if (gpsAlt < refHeaterAutoActivationHeight) {
       refHeatingMode = 1;
-    }
-    else {
+    } else {
       refHeatingMode = 1;
     }
   }
@@ -1592,7 +1553,7 @@ void refHeaterHeightActivator() {
 
 
 void powerHandler() {
-  if(readBatteryVoltage() < batteryCutOffVoltage && batteryCutOffVoltage != 0) {
+  if (readBatteryVoltage() < batteryCutOffVoltage && batteryCutOffVoltage != 0) {
     digitalWrite(RED_LED_PIN, LOW);
     delay(100);
     digitalWrite(RED_LED_PIN, HIGH);
@@ -1614,46 +1575,45 @@ void powerHandler() {
     setRadioModulation(0);  // CW modulation
     setRadioFrequency(rttyFrequencyMhz);
 
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("[ERR] BATTERY CUT-OFF VOLTAGE, SYSTEM WILL POWER OFF");
     }
 
     radioEnableTx();
     setRadioSmallOffset(RTTY_RADIO_MARK_OFFSET);
-    delay(250); //mark character idle
+    delay(250);  //mark character idle
     sendRTTYPacket("\n\n VBAT-CUTOFF VBAT-CUTOFF VBAT-CUTOFF");
     radioDisableTx();
 
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("\n PSU_SHUTDOWN_PIN set HIGH, bye!");
     }
-    
+
     delay(250);
     digitalWrite(PSU_SHUTDOWN_PIN, HIGH);
   }
 
-  if(powerSaveAltitude != -1) {
-    if(gpsAlt > powerSaveAltitude) {
-      if(powerSaveRadioPwrSetting != -1) {
+  if (powerSaveAltitude != -1) {
+    if (gpsAlt > powerSaveAltitude) {
+      if (powerSaveRadioPwrSetting != -1) {
         radioPwrSetting = powerSaveRadioPwrSetting;
         setRadioPower(radioPwrSetting);
       }
 
-      if(powerSaveModeChangeDelay != -1) {
+      if (powerSaveModeChangeDelay != -1) {
         modeChangeDelay = powerSaveModeChangeDelay;
       }
 
-    }
-    else {
-      if(powerSaveRadioPwrSetting != -1) {
+    } else {
+      if (powerSaveRadioPwrSetting != -1) {
         radioPwrSetting = defaultRadioPwrSetting;
         setRadioPower(radioPwrSetting);
       }
 
-      if(powerSaveModeChangeDelay != -1) {
+      if (powerSaveModeChangeDelay != -1) {
         modeChangeDelay = defaultModeChangeDelay;
       }
-    }  
+    }
   }
 }
 
@@ -1661,7 +1621,7 @@ void powerHandler() {
 void xdataInstrumentHandler() {
   unsigned long start = millis();
   String serialData = "";
-  
+
   // Read data until timeout
   while (millis() - start < oif411MsgWaitTime) {
     while (xdataSerial.available()) {
@@ -1688,53 +1648,52 @@ void decodeXdataOif411(String xdataString) {
   if (xdataString.startsWith("xdata=")) {
     // Extract the relevant substring containing the data
     String data = xdataString.substring(6);  // Remove "xdata=" from the input
-    
+
     // Extract and decode instrument type
     xdataInstrumentType = strtol(data.substring(0, 2).c_str(), NULL, 16);
-    
+
     // Extract and decode instrument number
     xdataInstrumentNumber = strtol(data.substring(2, 4).c_str(), NULL, 16);
-    
+
     // Extract and decode ozone pump temperature
     int rawPumpTemp = strtol(data.substring(4, 8).c_str(), NULL, 16);
     xdataOzonePumpTemperature = rawPumpTemp / 100.0;  // Convert to Celsius
-    
+
     // Extract and decode ozone current
     int rawOzoneCurrent = strtol(data.substring(8, 13).c_str(), NULL, 16);
     xdataOzoneCurrent = rawOzoneCurrent / 10000;  //  /10000
-    
+
     // Extract and decode ozone battery voltage
     int rawBatteryVoltage = strtol(data.substring(13, 15).c_str(), NULL, 16);
     xdataOzoneBatteryVoltage = rawBatteryVoltage / 10.0;  // Convert to Volts (V)
-    
+
     // Extract and decode ozone pump current
     xdataOzonePumpCurrent = strtol(data.substring(15, 18).c_str(), NULL, 16);
   }
 }
 
 // Based on: https://github.com/cturvey/RandomNinjaChef/blob/main/uBloxChecksum.c and others from this repo, big thanks!
-void uBloxM10Checksum(uint8_t *data) // Assumes buffer is large enough and modifyable
+void uBloxM10Checksum(uint8_t* data)  // Assumes buffer is large enough and modifyable
 {
   int i, length;
   uint8_t a, b;
 
-  a = 0; // Clear initial checksum bytes
+  a = 0;  // Clear initial checksum bytes
   b = 0;
 
-  length = data[4] + (data[5] << 8); // 16-bit Payload Length
-  
-  for(i=2; i<(length + 6); i++) // Sum over body
+  length = data[4] + (data[5] << 8);  // 16-bit Payload Length
+
+  for (i = 2; i < (length + 6); i++)  // Sum over body
   {
     a += data[i];
     b += a;
   }
 
-  data[i+0] = a; // Write checksum bytes into tail
-  data[i+1] = b;
+  data[i + 0] = a;  // Write checksum bytes into tail
+  data[i + 1] = b;
 }
- 
-void sendUblox(int Size, uint8_t *Buffer)
-{
+
+void sendUblox(int Size, uint8_t* Buffer) {
   //uBloxM10Checksum(Buffer); // Add/compute checksum bytes for packet | not needed because they are hardcoded now!!!
   gpsSerial.write(Buffer, Size);  // Arduino style byte send
 }
@@ -1742,115 +1701,115 @@ void sendUblox(int Size, uint8_t *Buffer)
 
 // Function to select reading of a sensor and set its state (on/off)
 void selectSensorBoom(int sensorNum, int state) {
-    // Ensure state is either 0 (off) or 1 (on), return if invalid
-    if (state != 0 && state != 1) {
-        return;  // Invalid state, do nothing
-    }
-    
-    // Set powerState based on the valid state
-    int powerState = (state == 1) ? HIGH : LOW;
+  // Ensure state is either 0 (off) or 1 (on), return if invalid
+  if (state != 0 && state != 1) {
+    return;  // Invalid state, do nothing
+  }
 
-    switch(sensorNum) {
-        case 0:  // All sensors
-            digitalWrite(SPST1, powerState);  // Reference 1
-            digitalWrite(SPST2, powerState);  // Reference 2
-            digitalWrite(SPST3, powerState);  // External Heater Temp
-            digitalWrite(SPST4, powerState);  // Main Temperature
-            digitalWrite(PULLUP_TM, powerState);  // Common PULLUP for all
-            break;
+  // Set powerState based on the valid state
+  int powerState = (state == 1) ? HIGH : LOW;
 
-        case 1:  // Reference 1 92khz (SPST1 and PULLUP_TM)
-            digitalWrite(SPST1, powerState);
-            digitalWrite(PULLUP_TM, powerState);
-            break;
+  switch (sensorNum) {
+    case 0:                                 // All sensors
+      digitalWrite(SPST1, powerState);      // Reference 1
+      digitalWrite(SPST2, powerState);      // Reference 2
+      digitalWrite(SPST3, powerState);      // External Heater Temp
+      digitalWrite(SPST4, powerState);      // Main Temperature
+      digitalWrite(PULLUP_TM, powerState);  // Common PULLUP for all
+      break;
 
-        case 2:  // Reference 2 62khz (SPST2 and PULLUP_TM)
-            digitalWrite(SPST2, powerState);
-            digitalWrite(PULLUP_TM, powerState);
-            break;
+    case 1:  // Reference 1 92khz (SPST1 and PULLUP_TM)
+      digitalWrite(SPST1, powerState);
+      digitalWrite(PULLUP_TM, powerState);
+      break;
 
-        case 3:  // External Heater Temperature (SPST3 and PULLUP_TM)
-            digitalWrite(SPST3, powerState);
-            digitalWrite(PULLUP_TM, powerState);
-            break;
+    case 2:  // Reference 2 62khz (SPST2 and PULLUP_TM)
+      digitalWrite(SPST2, powerState);
+      digitalWrite(PULLUP_TM, powerState);
+      break;
 
-        case 4:  // Main Temperature (SPST4 and PULLUP_TM)
-            digitalWrite(SPST4, powerState);
-            digitalWrite(PULLUP_TM, powerState);
-            break;
+    case 3:  // External Heater Temperature (SPST3 and PULLUP_TM)
+      digitalWrite(SPST3, powerState);
+      digitalWrite(PULLUP_TM, powerState);
+      break;
 
-        default:
-            // Invalid sensor number, do nothing
-            break;
-    }
+    case 4:  // Main Temperature (SPST4 and PULLUP_TM)
+      digitalWrite(SPST4, powerState);
+      digitalWrite(PULLUP_TM, powerState);
+      break;
+
+    default:
+      // Invalid sensor number, do nothing
+      break;
+  }
 }
 
 float getSensorBoomPeriod(int sensorNum) {
-    #define READ_PIN() (GPIOA->IDR & (1 << 1))  // PA1 corresponds to bit 1 in GPIOA IDR
+#define READ_PIN() (GPIOA->IDR & (1 << 1))  // PA1 corresponds to bit 1 in GPIOA IDR
 
-    selectSensorBoom(sensorNum, 1);
-    delay(100);
+  selectSensorBoom(sensorNum, 1);
+  delay(100);
 
-    unsigned long long measStartTime = micros(); // Start time for the timeout
-    unsigned long long measTimeoutDuration = 500000; // .5 seconds in microseconds
+  unsigned long long measStartTime = micros();      // Start time for the timeout
+  unsigned long long measTimeoutDuration = 500000;  // .5 seconds in microseconds
 
-    // Wait for the signal to go low
+  // Wait for the signal to go low
+  while (READ_PIN() != 0) {
+    if (micros() - measStartTime > measTimeoutDuration) {  // Check for timeout
+      selectSensorBoom(sensorNum, 0);                      // Ensure sensor is deselected
+      return -1;                                           // Return an error value (can be adjusted as needed)
+    }
+  }
+
+  // Wait for the signal to go high
+  while (READ_PIN() == 0) {
+    if (micros() - measStartTime > measTimeoutDuration) {  // Check for timeout
+      selectSensorBoom(sensorNum, 0);                      // Ensure sensor is deselected
+      return -1;                                           // Return an error value (can be adjusted as needed)
+    }
+  }
+
+  unsigned long long measFirstEdgeTime = micros();
+
+  for (int i = 0; i < 30000; i++) {  // 30000 measurements averaged
+    // Wait for the signal to go low (falling edge)
     while (READ_PIN() != 0) {
-        if (micros() - measStartTime > measTimeoutDuration) { // Check for timeout
-            selectSensorBoom(sensorNum, 0); // Ensure sensor is deselected
-            return -1; // Return an error value (can be adjusted as needed)
-        }
+      if (micros() - measStartTime > measTimeoutDuration) {  // Check for timeout
+        selectSensorBoom(sensorNum, 0);                      // Ensure sensor is deselected
+        return -1;                                           // Return an error value (can be adjusted as needed)
+      }
     }
 
-    // Wait for the signal to go high
+    // Wait for the signal to go high (rising edge)
     while (READ_PIN() == 0) {
-        if (micros() - measStartTime > measTimeoutDuration) { // Check for timeout
-            selectSensorBoom(sensorNum, 0); // Ensure sensor is deselected
-            return -1; // Return an error value (can be adjusted as needed)
-        }
+      if (micros() - measStartTime > measTimeoutDuration) {  // Check for timeout
+        selectSensorBoom(sensorNum, 0);                      // Ensure sensor is deselected
+        return -1;                                           // Return an error value (can be adjusted as needed)
+      }
     }
+  }
 
-    unsigned long long measFirstEdgeTime = micros();
+  unsigned long long measLastEdgeTime = micros();
 
-    for (int i = 0; i < 30000; i++) { // 30000 measurements averaged
-        // Wait for the signal to go low (falling edge)
-        while (READ_PIN() != 0) {
-            if (micros() - measStartTime > measTimeoutDuration) { // Check for timeout
-                selectSensorBoom(sensorNum, 0); // Ensure sensor is deselected
-                return -1; // Return an error value (can be adjusted as needed)
-            }
-        }
+  selectSensorBoom(sensorNum, 0);
 
-        // Wait for the signal to go high (rising edge)
-        while (READ_PIN() == 0) {
-            if (micros() - measStartTime > measTimeoutDuration) { // Check for timeout
-                selectSensorBoom(sensorNum, 0); // Ensure sensor is deselected
-                return -1; // Return an error value (can be adjusted as needed)
-            }
-        }
-    }
-
-    unsigned long long measLastEdgeTime = micros();
-
-    selectSensorBoom(sensorNum, 0);
-
-    return ((measLastEdgeTime - measFirstEdgeTime) / 30000.0);
+  return ((measLastEdgeTime - measFirstEdgeTime) / 30000.0);
 }
 
 float getSensorBoomFreq(int sensorNum) {
-    float period = getSensorBoomPeriod(sensorNum);
-    if (period > 0) {
-        return 1000000 / period;
-    } else {
-        return 0;
-    }
+  float period = getSensorBoomPeriod(sensorNum);
+  if (period > 0) {
+    return 1000000 / period;
+  } else {
+    return 0;
+  }
 }
 
 // Function to calibrate the sensor using the two calibration resistors
 float calibrateTempSensorBoom() {
   // Get the frequencies for calibration resistors
-  float freq750 = getSensorBoomFreq(1);  // Get frequency for 750Ω resistor
-  float freq1010 = getSensorBoomFreq(2); // Get frequency for 1010Ω resistor
+  float freq750 = getSensorBoomFreq(1);   // Get frequency for 750Ω resistor
+  float freq1010 = getSensorBoomFreq(2);  // Get frequency for 1010Ω resistor
 
   // Calibration constant k: R * f (frequency-to-resistance ratio)
   // We use an average to balance between the two calibration resistors.
@@ -1865,29 +1824,26 @@ float calculateSensorBoomResistance(float freq, float k) {
 
 // Function to convert PT1000 resistance to temperature in Celsius
 float convertPt1000ResToTemp(float resistance) {
-    const float R0 = 1000.0;  // Resistance at 0°C
-    const float alpha = 0.00385;  // Temperature coefficient of resistance
+  const float R0 = 1000.0;      // Resistance at 0°C
+  const float alpha = 0.00385;  // Temperature coefficient of resistance
 
-    // Calculate temperature using the formula
-    float temperature = (resistance - R0) / (R0 * alpha);
+  // Calculate temperature using the formula
+  float temperature = (resistance - R0) / (R0 * alpha);
 
-    return temperature;
+  return temperature;
 }
 
-void humiditySensorHeaterControl(int heaterPower) { //0 - OFF, 1 - small power, 2 - full power
-  if(heaterPower == 0) {
+void humiditySensorHeaterControl(int heaterPower) {  //0 - OFF, 1 - small power, 2 - full power
+  if (heaterPower == 0) {
     digitalWrite(HEAT_HUM1, LOW);
     digitalWrite(HEAT_HUM2, LOW);
-  }
-  else if(heaterPower == 1) {
+  } else if (heaterPower == 1) {
     digitalWrite(HEAT_HUM1, LOW);
     digitalWrite(HEAT_HUM2, HIGH);
-  }
-  else if(heaterPower == 2) {
+  } else if (heaterPower == 2) {
     digitalWrite(HEAT_HUM1, HIGH);
     digitalWrite(HEAT_HUM2, HIGH);
-  }
-  else {
+  } else {
     digitalWrite(HEAT_HUM1, LOW);
     digitalWrite(HEAT_HUM2, LOW);
   }
@@ -1895,15 +1851,15 @@ void humiditySensorHeaterControl(int heaterPower) { //0 - OFF, 1 - small power, 
 
 void sensorBoomHandler() {
   static int callCount = 0;
-  if(sensorBoomEnable) {
+  if (sensorBoomEnable) {
     // Calibrate the sensor and get the calibration factor
     tempSensorBoomCalibrationFactor = calibrateTempSensorBoom();
-    
+
     // Get main temperature frequency
     mainTemperatureFrequency = getSensorBoomFreq(4);
-    if(mainTemperatureFrequency <= 0) {
+    if (mainTemperatureFrequency <= 0) {
       sensorBoomMainTempError = true;  // Error if frequency is invalid
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[WARN]: Main temperature hook sensor boom error! MEAS frequency invalid. The hook may have snapped.");
       }
     } else {
@@ -1914,22 +1870,22 @@ void sensorBoomHandler() {
 
     // Get external heater temperature frequency
     extHeaterTemperatureFrequency = getSensorBoomFreq(3);
-    if(extHeaterTemperatureFrequency <= 0) {
+    if (extHeaterTemperatureFrequency <= 0) {
       sensorBoomHumidityModuleError = true;  // Error if frequency is invalid
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[WARN]: External humidity heater temperature sensor error! MEAS frequency invalid.");
       }
     } else {
       sensorBoomHumidityModuleError = false;  // No error
       extHeaterTemperatureResistance = calculateSensorBoomResistance(extHeaterTemperatureFrequency, tempSensorBoomCalibrationFactor);
-      extHeaterTemperatureValue = convertPt1000ResToTemp(extHeaterTemperatureResistance) + extHeaterTemperatureCorrectionC;      
+      extHeaterTemperatureValue = convertPt1000ResToTemp(extHeaterTemperatureResistance) + extHeaterTemperatureCorrectionC;
     }
 
     // Check overall sensor status
     sensorBoomGeneralError = sensorBoomMainTempError || sensorBoomHumidityModuleError;
 
-    if(sensorBoomMainTempError && sensorBoomHumidityModuleError) {
-      if(xdataPortMode == 1) {
+    if (sensorBoomMainTempError && sensorBoomHumidityModuleError) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[ERR]: The sensor boom seems disconnected!");
       }
     }
@@ -1940,41 +1896,39 @@ void sensorBoomHandler() {
 void modeChangeDelayCallback() {
   modeChangeDelayCallbackTimer = millis() + modeChangeDelay;
 
-  if(modeChangeDelay == 0) {}
-    else if(modeChangeDelay != 0 && modeChangeDelay < 1000) {
-      
-      while(millis() < modeChangeDelayCallbackTimer) {
-        buttonHandler();
-        deviceStatusHandler();
-        delay(1000);
-      }
+  if (modeChangeDelay == 0) {
+  } else if (modeChangeDelay != 0 && modeChangeDelay < 1000) {
 
-      if(xdataPortMode == 1) {
-        xdataSerial.print("[info]: modeChangeDelay enabled, waiting for: ");
-        xdataSerial.println(modeChangeDelay);
+    while (millis() < modeChangeDelayCallbackTimer) {
+      buttonHandler();
+      deviceStatusHandler();
+      delay(1000);
+    }
+
+    if (xdataPortMode == 1) {
+      xdataSerial.print("[info]: modeChangeDelay enabled, waiting for: ");
+      xdataSerial.println(modeChangeDelay);
+    }
+  } else {
+    if (xdataPortMode == 1) {
+      xdataSerial.print("[info]: modeChangeDelay enabled, waiting for: ");
+      xdataSerial.println(modeChangeDelay);
+    }
+
+    if (radioSleep) {
+      radioInhibitTx();
+
+      if (xdataPortMode == 1) {
+        xdataSerial.println("[info]: Radio sleep");
       }
     }
-    else {
-      if(xdataPortMode == 1) {
-        xdataSerial.print("[info]: modeChangeDelay enabled, waiting for: ");
-        xdataSerial.println(modeChangeDelay);
-      }
-      
-      if(radioSleep) {
-        radioInhibitTx();
 
-        if(xdataPortMode == 1) {
-          xdataSerial.println("[info]: Radio sleep");
-        }
-
-      }
-
-      while(millis() < modeChangeDelayCallbackTimer) {
-        buttonHandler();
-        deviceStatusHandler();
-        delay(1000);
-      }
+    while (millis() < modeChangeDelayCallbackTimer) {
+      buttonHandler();
+      deviceStatusHandler();
+      delay(1000);
     }
+  }
 }
 
 
@@ -1998,10 +1952,10 @@ void verticalVelocityCalculationHandler() {
 
 void setup() {
   pinMode(RED_LED_PIN, OUTPUT);
-  pinMode(GREEN_LED_PIN, OUTPUT);  
+  pinMode(GREEN_LED_PIN, OUTPUT);
   pinMode(PSU_SHUTDOWN_PIN, OUTPUT);
   pinMode(CS_RADIO_SPI, OUTPUT);
-  if(heaterPinControlAvail) {
+  if (heaterPinControlAvail) {
     pinMode(HEAT_REF, OUTPUT);
   }
   pinMode(PULLUP_TM, OUTPUT);
@@ -2021,89 +1975,85 @@ void setup() {
   digitalWrite(SPST2, LOW);
   digitalWrite(SPST3, LOW);
   digitalWrite(SPST4, LOW);
-  
+
   digitalWrite(GREEN_LED_PIN, LOW);
   digitalWrite(RED_LED_PIN, LOW);
   delay(50);
   digitalWrite(GREEN_LED_PIN, HIGH);
   digitalWrite(RED_LED_PIN, HIGH);
 
-  if(xdataPortMode == 1) {
+  if (xdataPortMode == 1) {
     xdataSerial.begin(115200);
-  }
-  else if(xdataPortMode == 3) {
+  } else if (xdataPortMode == 3) {
     xdataSerial.begin(9600);
   }
-  
-  if(rsm4x4){
+
+  if (rsm4x4) {
+    gpsSerial.begin(gpsBaudRate);
+  } else if (rsm4x2) {
     gpsSerial.begin(gpsBaudRate);
   }
-  else if(rsm4x2) {
-    gpsSerial.begin(gpsBaudRate);
-  }
-  
-  if(xdataPortMode == 1) {
+
+  if (xdataPortMode == 1) {
     xdataSerial.println("[info]: Serial interfaces initialized");
   }
 
-  if(rsm4x4) {
+  if (rsm4x4) {
     analogReadResolution(12);
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("[info]: ADC resolution set to 12 bits");
     }
   }
-  
+
 
   SPI_2.begin();
   digitalWrite(CS_RADIO_SPI, HIGH);  // Deselect the SI4432 CS pin
-  if(xdataPortMode == 1) {
+  if (xdataPortMode == 1) {
     xdataSerial.println("[info]: SPI_2 interface initialized");
   }
 
   digitalWrite(CS_RADIO_SPI, LOW);
   init_RFM22();
-  if(xdataPortMode == 1) {
+  if (xdataPortMode == 1) {
     xdataSerial.println("[info]: Si4032 radio register initialization complete");
   }
   //digitalWrite(CS_RADIO_SPI, HIGH); //no need to disable cs because no other spi devices on the bus
 
   setRadioPower(radioPwrSetting);
-  if(xdataPortMode == 1) {
+  if (xdataPortMode == 1) {
     xdataSerial.print("[info]: Si4032 PA power set to (pre-config): ");
     xdataSerial.println(radioPwrSetting);
   }
-  
+
   writeRegister(0x72, 0x07);  //deviation ~12khz, currently no use because of manual cw modes (rtty morse pip)
 
-  if(xdataPortMode == 1) {
+  if (xdataPortMode == 1) {
     xdataSerial.println("[info]: Si4032 deviation set to 0x07, not used for now?...");
   }
-  
-  fsk4_bitDuration = (uint32_t)1000000/horusBdr; //horus 100baud delay calculation
+
+  fsk4_bitDuration = (uint32_t)1000000 / horusBdr;  //horus 100baud delay calculation
 
 
-  disableRefHeaterRing(); //turn off reference heating
-  humiditySensorHeaterControl(0); //turn off humidity sensor heater
-  selectSensorBoom(0, 0); //turn off all sensor boom measurement circuits
+  disableRefHeaterRing();          //turn off reference heating
+  humiditySensorHeaterControl(0);  //turn off humidity sensor heater
+  selectSensorBoom(0, 0);          //turn off all sensor boom measurement circuits
 
 
-  if(ubloxGpsAirborneMode) { //sending twice as an experimental way, the value reading wasn't figured out yet
-    if(xdataPortMode == 1) {
+  if (ubloxGpsAirborneMode) {  //sending twice as an experimental way, the value reading wasn't figured out yet
+    if (xdataPortMode == 1) {
       xdataSerial.println("[info] Setting the Airborne 1G (6) GPS dynamic model...");
-    }  
+    }
 
-    if(rsm4x4) {    
+    if (rsm4x4) {
       sendUblox(sizeof(ubx_cfg_valset_dyn6), ubx_cfg_valset_dyn6);
       delay(1000);
       sendUblox(sizeof(ubx_cfg_valset_dyn6), ubx_cfg_valset_dyn6);
 
-    }
-    else if(rsm4x2) {
+    } else if (rsm4x2) {
       sendUblox(sizeof(ubx_cfg_nav5_dynmodel6), ubx_cfg_nav5_dynmodel6);
       delay(1000);
       sendUblox(sizeof(ubx_cfg_nav5_dynmodel6), ubx_cfg_nav5_dynmodel6);
     }
-    
   }
 
   digitalWrite(GREEN_LED_PIN, LOW);
@@ -2115,16 +2065,15 @@ void setup() {
   digitalWrite(GREEN_LED_PIN, HIGH);
   delay(200);
 
-  if(xdataPortMode == 1) {
+  if (xdataPortMode == 1) {
     xdataSerial.println("[info]: Exiting setup...");
   }
-
 }
 
 
 void loop() {
   buttonHandler();
-  deviceStatusHandler(); 
+  deviceStatusHandler();
   serialStatusHandler();
   updateGpsData();
   verticalVelocityCalculationHandler();
@@ -2132,34 +2081,34 @@ void loop() {
   powerHandler();
   refHeaterHeightActivator();
   sensorBoomHandler();
-  
 
-  if(xdataPortMode == 3) {
+
+  if (xdataPortMode == 3) {
     xdataInstrumentHandler();
   }
 
   if (pipEnable) {
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("[info]: PIP mode enabled");
     }
-    
+
     if (radioEnablePA) {
       setRadioModulation(0);
       setRadioFrequency(pipFrequencyMhz);
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.print("[info]: PIP on (MHz): ");
         xdataSerial.println(pipFrequencyMhz);
         xdataSerial.println("[info]: Transmitting PIP...");
-      }      
+      }
 
       for (txRepeatCounter; txRepeatCounter < pipRepeat; txRepeatCounter++) {
         radioEnableTx();
 
-        if(xdataPortMode == 1) {
+        if (xdataPortMode == 1) {
           xdataSerial.print("pip ");
         }
-        
+
         delay(pipLengthMs);
         buttonHandler();
         deviceStatusHandler();
@@ -2170,63 +2119,60 @@ void loop() {
         deviceStatusHandler();
       }
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: PIP TX done");
       }
-      
+
       txRepeatCounter = 0;
-    }
-    else {
-      if(xdataPortMode == 1) {
+    } else {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: radioEnablePA false, won't transmit");
       }
     }
 
-    modeChangeDelayCallback();    
+    modeChangeDelayCallback();
   }
 
   buttonHandler();
   deviceStatusHandler();
 
   if (morseEnable) {
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("[info]: Morse mode enabled");
     }
 
     if (radioEnablePA) {
       morseMsg = createRttyShortPayload();
       const char* morseMsgCstr = morseMsg.c_str();
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: Morse payload created: ");
         xdataSerial.println(morseMsg);
         xdataSerial.println();
       }
-      
+
       setRadioModulation(0);  // CW modulation
       setRadioFrequency(morseFrequencyMhz);
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.print("[info]: Morse transmitting on (MHz): ");
         xdataSerial.println(morseFrequencyMhz);
       }
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: Transmitting morse...");
       }
-      
+
       transmitMorseString(morseMsgCstr, morseUnitTime);
       radioDisableTx();
 
-      if(xdataPortMode == 1) {
-      xdataSerial.println("[info]: Morse TX done");
+      if (xdataPortMode == 1) {
+        xdataSerial.println("[info]: Morse TX done");
       }
-      
-    }
-    else {
-      if(xdataPortMode == 1) {
+
+    } else {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: radioEnablePA false, won't transmit");
       }
-      
     }
 
     modeChangeDelayCallback();
@@ -2237,57 +2183,55 @@ void loop() {
 
 
   if (rttyEnable) {
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("[info]: RTTY mode enabled");
     }
-    
+
     if (radioEnablePA) {
-      if(rttyShortenMsg) {
+      if (rttyShortenMsg) {
         rttyMsg = createRttyShortPayload();
-      }
-      else {
+      } else {
         rttyMsg = createRttyPayload();
       }
-      
+
       const char* rttyMsgCstr = rttyMsg.c_str();
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.print("[info]: RTTY payload created: ");
         xdataSerial.println(rttyMsg);
         xdataSerial.println("");
       }
-      
+
 
       setRadioModulation(0);  // CW modulation
       setRadioFrequency(rttyFrequencyMhz);
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.print("[info]: RTTY frequency set to (MHz): ");
         xdataSerial.println(rttyFrequencyMhz);
       }
-      
+
 
       radioEnableTx();
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: Transmitting RTTY");
       }
-      
+
       setRadioSmallOffset(RTTY_RADIO_MARK_OFFSET);
-      delay(250); //mark character idle
+      delay(250);  //mark character idle
       sendRTTYPacket(rttyMsgCstr);
       sendRTTYPacket("\n\n");
       radioDisableTx();
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: RTTY TX done");
       }
-      
-    }
-    else {
-      if(xdataPortMode == 1) {
+
+    } else {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: radioEnablePA false, won' transmit");
       }
     }
-  
+
     modeChangeDelayCallback();
   }
 
@@ -2295,15 +2239,15 @@ void loop() {
   deviceStatusHandler();
 
   if (horusEnable) {
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("[info]: HORUS mode enabled");
     }
-    
+
     if (radioEnablePA) {
       int pkt_len = build_horus_binary_packet_v2(rawbuffer);
-      int coded_len = horus_l2_encode_tx_packet((unsigned char*)codedbuffer,(unsigned char*)rawbuffer,pkt_len);
+      int coded_len = horus_l2_encode_tx_packet((unsigned char*)codedbuffer, (unsigned char*)rawbuffer, pkt_len);
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.print("[info]: HORUS payload created.");
 
         xdataSerial.print(F("Uncoded Length (bytes): "));
@@ -2317,19 +2261,19 @@ void loop() {
         PrintHex(codedbuffer, coded_len, debugbuffer);
         xdataSerial.println(debugbuffer);
       }
-      
+
 
       setRadioModulation(0);  // CW modulation
       setRadioFrequency(horusFrequencyMhz);
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.print("[info]: HORUS frequency set to (MHz): ");
         xdataSerial.println(horusFrequencyMhz);
       }
-      
-      if(xdataPortMode == 1) {
+
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: Transmitting HORUS");
       }
-      
+
       radioEnableTx();
 
       fsk4_idle();
@@ -2339,17 +2283,16 @@ void loop() {
 
       radioDisableTx();
 
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: HORUS TX done");
       }
-      
-    }
-    else {
-      if(xdataPortMode == 1) {
+
+    } else {
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: radioEnablePA false, won' transmit");
       }
     }
-    
+
     modeChangeDelayCallback();
   }
 
@@ -2357,31 +2300,30 @@ void loop() {
   deviceStatusHandler();
 
   if (bufTxEnable) {
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("[info]: bufTx mode enabled");
     }
-    
+
     if (radioEnablePA) {
       setRadioModulation(2);
       setRadioFrequency(fskFrequencyMhz);
-      if(xdataPortMode == 1) {
+      if (xdataPortMode == 1) {
         xdataSerial.print("[info]: Transmitting on (MHz): ");
         xdataSerial.println(fskFrequencyMhz);
       }
-      
+
       txBuf();
-      
-      if(xdataPortMode == 1) {
+
+      if (xdataPortMode == 1) {
         xdataSerial.println("[info]: TX done.");
       }
-      
     }
   }
 
   buttonHandler();
   deviceStatusHandler();
 
-  if(xdataPortMode == 1) { //only for development
+  if (xdataPortMode == 1) {  //only for development
     /*xdataSerial.println("[info]: DEBUG DATA: ");
     xdataSerial.print("Lat, long: ");
     xdataSerial.print(String(gpsLat, 6));
@@ -2410,17 +2352,16 @@ void loop() {
     xdataSerial.println(analogRead(VBAT_PIN));
     xdataSerial.println("\n\n\n");*/
   }
-  
-  
+
+
 
   if (!radioEnablePA) {
-    if(xdataPortMode == 1) {
+    if (xdataPortMode == 1) {
       xdataSerial.println("[info]: Radio PA not enabled");
     }
   }
 
-  if(xdataPortMode == 1) {
+  if (xdataPortMode == 1) {
     xdataSerial.println("\n\n");
   }
-  
 }
